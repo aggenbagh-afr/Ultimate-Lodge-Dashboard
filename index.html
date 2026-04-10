@@ -1646,7 +1646,7 @@ let partyBar = '';
         return `<div class="${cardClass}">
             <div class="cr-reserve reserve-label">${lodge.reserve}</div>
             <div class="cr-name card-header">
-                <div class="card-name-wrap"><h3 id="h3-${sid}" style="font-size:${lodge.name.length > 28 ? (lodge.name.length > 38 ? '0.88rem' : '1rem') : '1.15rem'}">${lodge.name}</h3></div>
+                <div class="card-name-wrap"><h3 id="h3-${sid}">${lodge.name}</h3></div>
                 <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
                     <span class="sto-badge">STO: ${(function(v){ if(typeof v==='number') return Math.round(v*100)+'%'; v=String(v); return (v.includes('%')||v.includes('BAR')||v.toUpperCase().includes('T.B.A')) ? v : v+'%'; })(lodge.sto)}</span>
                     <button class="fav-btn" title="Toggle Favourite" onclick="toggleFavorite('${lodge.name.replace(/'/g,"\\'")}')">${isFav ? '❤️' : '🤍'}</button>
@@ -1971,6 +1971,23 @@ function renderCompareTable() {
 
 
 // ═══════════════════════════════════════════════════
+// AUTO-RESIZE LODGE NAME HEADERS TO MAX 2 LINES
+// ═══════════════════════════════════════════════════
+function resizeAllHeaders() {
+  document.querySelectorAll('.card h3').forEach(h3 => {
+    let size = 1.15;
+    h3.style.fontSize = size + 'rem';
+    const computed = getComputedStyle(h3);
+    const lineHeight = parseFloat(computed.lineHeight);
+    const maxH = lineHeight * 2 + 4;
+    while (h3.scrollHeight > maxH && size > 0.75) {
+      size -= 0.03;
+      h3.style.fontSize = size + 'rem';
+    }
+  });
+}
+
+// ═══════════════════════════════════════════════════
 // ROW EQUALISER — aligns card sections across each grid row
 // ═══════════════════════════════════════════════════
 function equaliseCardRows() {
@@ -1981,6 +1998,9 @@ function equaliseCardRows() {
 
     const rowClasses = ['cr-reserve','cr-name','cr-links','cr-price',
         'cr-accom','cr-cap','cr-highlights','cr-badges','cr-incl','cr-fac'];
+
+    // ← Resize headers FIRST so .cr-name is already optimal
+    resizeAllHeaders();
 
     // Step 1: Reset ALL minHeights so we measure natural sizes
     rowClasses.forEach(cls => {
