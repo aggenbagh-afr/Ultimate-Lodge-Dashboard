@@ -76,7 +76,7 @@
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 20px; max-width: 1300px; margin: 0 auto; align-items: start; grid-auto-rows: auto; }
         .card { background: var(--card); border-radius: 10px; padding: 18px; box-shadow: 0 3px 10px rgba(0,0,0,0.07); transition: transform 0.18s, box-shadow 0.18s; border-top: 5px solid var(--primary); display: grid; grid-template-rows: auto auto auto auto auto auto auto auto auto auto; position: relative; }
         .card-row-reserve { }
-        .card-row-name { height: 58px; overflow: hidden; display: flex; align-items: flex-start; }
+        .card-row-name { display: flex; align-items: flex-start; }
         .card-row-links { min-height: 28px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
         .card-row-price { }
         .card-row-accom { }
@@ -88,7 +88,7 @@
         .card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.13); }
         /* Card row alignment classes */
         .cr-reserve { }
-        .cr-name { }
+        .cr-name { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
         .cr-links { min-height: 26px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 10px; }
         .cr-price { }
         .cr-accom { }
@@ -102,7 +102,7 @@
         .reserve-label { font-size: 0.75rem; color: #95a5a6; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
         .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px; }
         .card h3 { font-size: 1.15rem; color: var(--primary); padding-right: 8px; line-height: 1.25; }
-        .card-name-wrap { }
+        .card-name-wrap { flex: 1; min-width: 0; }
         .fav-btn { background: none; border: none; font-size: 1.3rem; cursor: pointer; transition: transform 0.15s; user-select: none; flex-shrink: 0; }
         .fav-btn:hover { transform: scale(1.25); }
         .card-links { margin-bottom: 10px; font-size: 0.85rem; display: flex; flex-wrap: wrap; gap: 6px; }
