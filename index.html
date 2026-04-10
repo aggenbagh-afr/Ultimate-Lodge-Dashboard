@@ -206,24 +206,85 @@
 
 
         /* ── PRINT BUTTON ── */
-        .btn-print { background: #6c3483; color: #fff; border: none; padding: 8px 16px; border-radius: 6px; font-size: 0.85rem; font-weight: 700; cursor: pointer; white-space: nowrap; }
-        .btn-print:hover { background: #512e72; }
+        .btn-print-tile { background: #6c3483; color: #fff; border: none; padding: 8px 16px; border-radius: 6px; font-size: 0.85rem; font-weight: 700; cursor: pointer; white-space: nowrap; }
+        .btn-print-tile:hover { background: #512e72; }
+        .btn-print-list { background: #154360; color: #fff; border: none; padding: 8px 16px; border-radius: 6px; font-size: 0.85rem; font-weight: 700; cursor: pointer; white-space: nowrap; }
+        .btn-print-list:hover { background: #0e2f44; }
 
-        /* ── PRINT STYLES ── */
+        /* ── PRINT SHARED ── */
         @media print {
-            body { padding: 0; background: #fff; }
-            header, .controls-container, .backup-bar, .backup-bar ~ div,
-            .btn-print, .incl-btn, .incl-panel, .facilities-btn, .facilities-list,
-            .fav-btn, .card-links, .badges, .party-match-bar, .multi-room-alert { display: none !important; }
-            .grid { display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: 10px !important; max-width: 100% !important; }
-            .card { break-inside: avoid; box-shadow: none !important; border: 1px solid #ccc !important; padding: 10px !important; transform: none !important; }
-            .card h3 { font-size: 0.9rem !important; }
-            .price-tier { font-size: 0.8rem !important; margin-bottom: 4px !important; }
-            .details { font-size: 0.75rem !important; }
-            .highlights { font-size: 0.72rem !important; padding: 6px !important; }
-            .reserve-label { font-size: 0.65rem !important; }
-            .sto-badge { font-size: 0.65rem !important; padding: 1px 5px !important; }
+            @page { margin: 1cm; size: A4 landscape; }
+            body { padding: 0 !important; background: #fff !important; }
+            header, .controls-container,
+            .btn-print-tile, .btn-print-list, .btn-compare, .btn-clear,
+            .lock-btn, #syncControls, #backupStatus,
+            .fav-btn, .card-links, .badges,
+            .party-match-bar, .multi-room-alert,
+            .incl-btn, .incl-panel,
+            .facilities-btn, .facilities-list,
+            .modal-overlay, .compare-modal,
+            div[style*="justify-content:flex-end"],
+            div[style*="space-between"] { display: none !important; }
+            .print-header { display: block !important; }
         }
+
+        /* ── TILE PRINT MODE ── */
+        @media print {
+            body.print-tile .grid {
+                display: grid !important;
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 8pt !important;
+                max-width: 100% !important;
+                margin: 0 !important;
+            }
+            body.print-tile .card {
+                break-inside: avoid;
+                box-shadow: none !important;
+                border: 1pt solid #bbb !important;
+                border-top: 3pt solid #2C5F2D !important;
+                padding: 8pt !important;
+                transform: none !important;
+            }
+            body.print-tile .card-name-wrap { min-height: auto !important; }
+            body.print-tile .card h3 { font-size: 8.5pt !important; color: #2C5F2D !important; }
+            body.print-tile .reserve-label { font-size: 7pt !important; }
+            body.print-tile .sto-badge { font-size: 7pt !important; padding: 1pt 4pt !important; }
+            body.print-tile .price-tier { font-size: 7.5pt !important; margin-bottom: 3pt !important; }
+            body.print-tile .details { font-size: 7pt !important; margin-bottom: 1pt !important; }
+            body.print-tile .highlights { font-size: 6.5pt !important; padding: 4pt !important; margin-top: 3pt !important; }
+        }
+
+        /* ── LIST PRINT MODE ── */
+        @media print {
+            body.print-list .grid {
+                display: grid !important;
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 6pt !important;
+                max-width: 100% !important;
+                margin: 0 !important;
+            }
+            body.print-list .card {
+                break-inside: avoid;
+                box-shadow: none !important;
+                border: 0.5pt solid #ccc !important;
+                border-left: 3pt solid #2C5F2D !important;
+                border-radius: 0 !important;
+                padding: 6pt 8pt !important;
+                transform: none !important;
+                display: block !important;
+            }
+            body.print-list .card-header { margin-bottom: 2pt !important; }
+            body.print-list .card-name-wrap { min-height: auto !important; display: inline !important; }
+            body.print-list .card h3 { font-size: 8pt !important; color: #2C5F2D !important; display: inline !important; }
+            body.print-list .reserve-label { font-size: 6.5pt !important; color: #999 !important; margin-bottom: 1pt !important; }
+            body.print-list .sto-badge { font-size: 6.5pt !important; padding: 0pt 3pt !important; }
+            body.print-list .price-tier { font-size: 7pt !important; margin-bottom: 1pt !important; }
+            body.print-list .details { font-size: 6.5pt !important; margin-bottom: 1pt !important; }
+            body.print-list .highlights { font-size: 6.5pt !important; padding: 3pt 5pt !important; margin-top: 2pt !important; border-left: 1.5pt solid #97BC62 !important; background: #f9f9f9 !important; border-radius: 0 !important; }
+        }
+
+        /* hide print header on screen */
+        .print-header { display: none; }
 
 
         /* ── PASSWORD LOCK ── */
@@ -389,10 +450,17 @@
 <div style="max-width:1300px;margin:0 auto 10px;display:flex;justify-content:flex-end;gap:10px;">
     <button class="btn-clear" onclick="clearAllFilters()">✕ Clear Filters</button>
     <button class="btn-compare" onclick="openCompare()">⚖ Compare Lodges</button>
-    <button class="btn-print" onclick="printDashboard()">🖨 Print / Save PDF</button>
+    <button class="btn-print-tile" onclick="printMode('tile')">🖨 Print Tiles</button>
+    <button class="btn-print-list" onclick="printMode('list')">☰ Print List</button>
 </div>
 
 
+<div class="print-header" id="printHeader">
+    <div style="border-bottom:2pt solid #2C5F2D;margin-bottom:10pt;padding-bottom:6pt;display:flex;justify-content:space-between;align-items:baseline;">
+        <span style="font-size:12pt;font-weight:700;color:#2C5F2D;">Ultimate Safari Lodge Dashboard</span>
+        <span id="printMeta" style="font-size:8pt;color:#999;"></span>
+    </div>
+</div>
 <div class="grid" id="lodgeGrid"></div>
 
 <div class="modal-overlay hidden" id="ageModal">
@@ -1573,8 +1641,17 @@ function toggleSyncLock() {
 // ═══════════════════════════════════════════════════
 // PRINT / PDF
 // ═══════════════════════════════════════════════════
-function printDashboard() {
+function printMode(mode) {
+    // Update print header meta
+    const statsText = document.getElementById('statsBar') ? document.getElementById('statsBar').innerText : '';
+    const meta = document.getElementById('printMeta');
+    if (meta) meta.textContent = statsText + ' — ' + new Date().toLocaleDateString('en-ZA');
+    // Set body class for CSS targeting
+    document.body.classList.remove('print-tile', 'print-list');
+    document.body.classList.add('print-' + mode);
     window.print();
+    // Clean up after print dialog closes
+    setTimeout(() => document.body.classList.remove('print-tile', 'print-list'), 1000);
 }
 // ═══════════════════════════════════════════════════
 // NAME SEARCH
