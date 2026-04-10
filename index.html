@@ -111,7 +111,7 @@
         .price-tier { font-weight: bold; color: var(--accent); font-size: 1rem; margin-bottom: 8px; }
         .details { font-size: 0.85rem; margin-bottom: 4px; color: #555; }
         .details strong { color: #222; }
-        .highlights { margin-top: 8px; background: #f9f9f9; padding: 10px; border-radius: 6px; font-size: 0.83rem; line-height: 1.45; align-self: stretch; }
+        .highlights { margin-top: 8px; background: #f9f9f9; padding: 10px; border-radius: 6px; font-size: 0.83rem; line-height: 1.45; }
         .highlights-inner { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; transition: all 0.2s; cursor: default; }
         .highlights:hover .highlights-inner { display: block; overflow: visible; -webkit-line-clamp: unset; }
         .highlights-inner.clamped::after { content: " …"; color: #999; }
@@ -281,31 +281,48 @@
 
         /* ── LIST PRINT MODE ── */
         @media print {
+            /* LIST MODE — one lodge per row, horizontal layout */
             body.print-list .grid {
-                display: grid !important;
-                grid-template-columns: repeat(3, 1fr) !important;
-                gap: 6pt !important;
+                display: block !important;
                 max-width: 100% !important;
                 margin: 0 !important;
             }
             body.print-list .card {
-                break-inside: avoid;
+                display: grid !important;
+                grid-template-columns: 160pt 1fr 1fr !important;
+                grid-template-rows: auto !important;
+                break-inside: avoid !important;
                 box-shadow: none !important;
-                border: 0.5pt solid #ccc !important;
+                border: none !important;
+                border-bottom: 0.5pt solid #ddd !important;
                 border-left: 3pt solid #2C5F2D !important;
                 border-radius: 0 !important;
-                padding: 6pt 8pt !important;
+                padding: 6pt 0 6pt 8pt !important;
                 transform: none !important;
-                display: block !important;
+                gap: 0 10pt !important;
+                margin-bottom: 2pt !important;
             }
-            body.print-list .card-header { margin-bottom: 2pt !important; }
-            body.print-list .card-name-wrap { min-height: auto !important; display: inline !important; }
-            body.print-list .card h3 { font-size: 8pt !important; color: #2C5F2D !important; display: inline !important; }
-            body.print-list .reserve-label { font-size: 6.5pt !important; color: #999 !important; margin-bottom: 1pt !important; }
-            body.print-list .sto-badge { font-size: 6.5pt !important; padding: 0pt 3pt !important; }
-            body.print-list .price-tier { font-size: 7pt !important; margin-bottom: 1pt !important; }
-            body.print-list .details { font-size: 6.5pt !important; margin-bottom: 1pt !important; }
-            body.print-list .highlights { font-size: 6.5pt !important; padding: 3pt 5pt !important; margin-top: 2pt !important; border-left: 1.5pt solid #97BC62 !important; background: #f9f9f9 !important; border-radius: 0 !important; }
+            /* Left column: reserve, name, STO, price, badges */
+            body.print-list .cr-reserve { grid-column: 1; grid-row: 1; font-size: 6pt !important; color: #999 !important; }
+            body.print-list .cr-name { grid-column: 1; grid-row: 2; height: auto !important; min-height: auto !important; }
+            body.print-list .cr-name h3 { font-size: 8.5pt !important; color: #2C5F2D !important; }
+            body.print-list .cr-price { grid-column: 1; grid-row: 3; font-size: 7pt !important; }
+            body.print-list .cr-badges { grid-column: 1; grid-row: 4; margin: 2pt 0 0 !important; }
+            body.print-list .cr-badges .badge { font-size: 6pt !important; padding: 1pt 4pt !important; }
+            body.print-list .sto-badge { font-size: 6pt !important; }
+            /* Middle column: accommodation, capacity, highlights */
+            body.print-list .cr-links { grid-column: 2; grid-row: 1 / 3; display: none !important; }
+            body.print-list .cr-accom { grid-column: 2; grid-row: 1; font-size: 6.5pt !important; }
+            body.print-list .cr-cap { grid-column: 2; grid-row: 2; font-size: 6.5pt !important; }
+            body.print-list .cr-highlights { grid-column: 2; grid-row: 3 / 5; font-size: 6.5pt !important; padding: 3pt 5pt !important; margin-top: 0 !important; border-left: 1.5pt solid #97BC62 !important; background: #f9f9f9 !important; border-radius: 0 !important; }
+            body.print-list .cr-highlights .highlights-inner { display: block !important; -webkit-line-clamp: unset !important; overflow: visible !important; }
+            /* Right column: inclusions/exclusions */
+            body.print-list .cr-incl { grid-column: 3; grid-row: 1 / 5; font-size: 6pt !important; }
+            body.print-list .cr-incl .incl-btn { display: none !important; }
+            body.print-list .cr-incl .incl-panel { display: block !important; padding: 0 !important; border: none !important; background: none !important; }
+            body.print-list .cr-incl .incl-section-label { font-size: 6pt !important; margin: 2pt 0 1pt !important; }
+            body.print-list .cr-incl li { font-size: 6pt !important; padding: 0 !important; }
+            body.print-list .cr-fac { display: none !important; }
         }
 
         /* hide print header on screen */
@@ -707,6 +724,19 @@ const lodgeFacilitiesMap = {
 // DATA — INCLUSIONS & EXCLUSIONS MAP
 // ═══════════════════════════════════════════════════
 const lodgeInclMap = {
+"Chitwa Chitwa Game Lodge": { include: "Accommodation | All meals | Teas & coffees | Bottled water, soft drinks, local beer and spirits | Chitwa House Wine Selection | Two open vehicle safaris a day | Daily walking safaris | Laundry service | Return transfers from the Chitwa airstrip to the lodge", exclude: "Purchases from the boutique | Spa Treatments | Telephone calls | Air and road transfers to/from the lodge | All premium label alcoholic beverages" },
+    "Lion Sands Chalkley Treehouse": { include: "Treehouse accommodation | Gourmet picnic dinner and inclusive drinks (all soft drinks, and selection of beers, spirits and house wines)", exclude: "All items and services not specifically mentioned in the rates above" },
+    "Lion Sands Kingston Treehouse": { include: "Treehouse accommodation | Gourmet picnic dinner and inclusive drinks (all soft drinks, and selection of beers, spirits and house wines)", exclude: "All items and services that are not specifically mentioned in our quotation above" },
+    "Little Madikwe Hills": { include: "Luxury accommodation | Two game drives per day | Three meals daily | Tea / Coffee | A wide selection of local beverages, house wines and spirits | High tea canapes & snacks | Selection of Fruit Juices | Laundry service | Road transfers from the Madikwe Airstrip to the lodge | Additional Suite Inclusions: | Private Game Drive Vehicle with Field Guide & Tracker | Villa Attendant and Personal Chef | All meals served in the Suite | Satellite TV | Children’s games & books", exclude: "All items and services not specifically mentioned in the rates above" },
+    "Makalali Private Game Lodge (Main Lodge)": { include: "Accommodation | Three Meals Daily | Morning & Evening Game Drives | TOMSA 1%", exclude: "All items and services that are not specifically mentioned in our quotation above" },
+    "Makalali Private Game River Lodge": { include: "Accommodation | Three Meals Daily | Morning & Evening Game Drives | Selected House Drinks | Hoedspruit Airport Transfers | TOMSA 1%", exclude: "All items and services that are not specifically mentioned in our quotation above" },
+    "Motswiri Private Safari": { include: "Luxury accommodation | Two game drives per day in our open game viewers with a highly qualified game ranger | All meals daily (excluding Kosher meals) | Welcome drinks | Specialised Coffees | A selection of local beers, ciders, house wines,soft drinks and waters | Complimentary road transfer from the Madikwe Western Airstrip to the Lodge", exclude: "Premium beverages other than stated above asincluded | Gate entry or fly-in fees rates are subject to change without prior notice and controlled by the North West Parks Board | Airstrip landing fees rates are subject to change without prior notice and controlled by the North West Parks Board | Conservation levies rates are subject to change without prior notice and controlled by the North West Parks Board | Any other items of personal nature" },
+    "Shishangeni Main Lodge": { include: "Accommodation | Three Meals Daily | Morning & Evening Game Drives | Wi-Fi at Shishangeni main lodge | Parking | VAT and TOURISM LEVY", exclude: "All items and services that are not specifically mentioned in our quotation above" },
+    "Simbambili Game Lodge": { include: "Accommodation | All meals and snacks | Local drinks (soft drinks, house wine, selected beer and spirits) | Minibar drinks | Morning & afternoon game drives with expert guides & trackers | Wi-Fi | Laundry", exclude: "Champagne, premium wines and spirits | Curio purchases & spa treatments | Gratuities" },
+    "Siviti Timbavati Plains - Homestead": { include: "Self-catered : | Accommodation | Two Game Drives A Day With A Private Field Guide And Tracker | Daily Housekeeping | Swimming Pool | Fully-catered : | Accommodation | Two Game Drives A Day With A Private Field Guide And Tracker | Daily Housekeeping | Swimming Pool | Three Meals Daily | Selected House Drinks (only until 31 Aug 2025) | Teas & Coffees", exclude: "All items and services not specifically mentioned in the rates above" },
+    "The Royal Madikwe": { include: "Accommodation | Three Meals Daily (Personal Chef & Butler, Traditional Boma Dinner & African Drumming, Picnic Lunch in the Wilderness) | Morning & Evening Game Drives | Teas & Coffees | Selected House Drinks | Transfers to/from Madikwe Western Airstrip | Personal Meet & Greet and Fast track through Immigration on arrival at ORT International Airport | Access to Fitness Centre | Children’s Program | Laundry Service | High Speed Wi-Fi", exclude: "All items and services not specifically mentioned in the rates above" },
+    "Tulela Mondzo": { include: "Accommodation | Three Meals Daily | Morning & Evening Game Drives | Bush/Nature Activities(subject to availability) | Firewood and ice are provided | Use of the gym | WiFi", exclude: "All items and services not specifically mentioned in the rates above" },
+    "Tulela Safari Lodge": { include: "Accommodation | Three Meals Daily | Morning & Evening Game Drives | Bush/Nature Activities(subject to availability) | Private chef and housekeeping staff | Use of the gym", exclude: "All items and services not specifically mentioned in the rates above" },
     "18 on the Hill": { include: "Accommodation | All Meal(breakfast, lunch and dinner) | 2 x daily safari game drives | house beverages | conservation levies | complimentary snacks", exclude: "All items and services not specifically mentioned in the rates above" },
     "AM Villa": { include: "Accommodation | Three Meals Daily (A La Carte) with Private Chef and Butler | Morning & Evening Game Drives  at AM Private Game Reserve | Bush/Nature Activities(subject to availability) | Selected House Drinks | Access to a Fully Equipped Gym | Wi-Fi in all guest rooms and public areas | Eastgate Airport (HDS) Transfers", exclude: "All items and services not specifically mentioned in the rates above" },
     "Abelana Safari Camp": { include: "Accommodation in Meru tents with en-suite | All teas/coffees | Light snack/rusks/muffins before morning activity | Afternoon/evening game drives with qualified guide | Brunch | High tea with savoury and sweet options | Dinner", exclude: "All drinks | Any gratuities | Transfers to and from the reserve" },
@@ -1645,7 +1675,7 @@ let partyBar = '';
 // ═══════════════════════════════════════════════════
 let syncUnlocked = false;
 
-function toggleSyncLock() {
+async function toggleSyncLock() {
     if (syncUnlocked) {
         syncUnlocked = false;
         document.getElementById('syncControls').style.display = 'none';
@@ -1655,7 +1685,7 @@ function toggleSyncLock() {
         document.getElementById('backupStatus').className = 'backup-status idle';
     } else {
         const pwd = prompt('Enter admin password:');
-        if (pwd === '1983') {
+        const h = Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pwd)))).map(b=>b.toString(16).padStart(2,'0')).join(''); if (h === '52bb7cc738dbf5e5eee2c76754d87904e6750c63eda5e0a866197d2e16d9c142') {
             syncUnlocked = true;
             document.getElementById('syncControls').style.display = 'flex';
             document.getElementById('lockBtn').textContent = '🔓 Admin';
@@ -1899,7 +1929,7 @@ function renderCompareTable() {
         if (compareMode === 'diff' && allSame) return;
         const isDiff = !allSame;
         tbody += `<tr class="${isDiff ? 'diff-row' : ''}">`;
-        tbody += `<td>${row.label}${isDiff ? ' <span style="color:#d35400;font-size:0.7rem;">▲ differs</span>' : ''}</td>`;
+        tbody += `<td>${row.label}</td>`;
         vals.forEach(v => {
             tbody += row.html ? `<td>${v}</td>` : `<td>${v}</td>`;
         });
