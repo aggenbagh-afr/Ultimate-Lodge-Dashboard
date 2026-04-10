@@ -73,15 +73,15 @@
         .sort-bar select { flex: 0 0 auto; width: auto; min-width: 180px; font-size: 0.85rem; padding: 6px 10px; }
 
         /* ── GRID / CARDS ── */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(310px, 100%), 1fr)); gap: 20px; max-width: 1300px; margin: 0 auto; align-items: start; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 20px; max-width: 1300px; margin: 0 auto; align-items: start; }
         .card { background: var(--card); border-radius: 10px; padding: 18px; box-shadow: 0 3px 10px rgba(0,0,0,0.07); transition: transform 0.18s, box-shadow 0.18s; border-top: 5px solid var(--primary); display: flex; flex-direction: column; position: relative; }
         .card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.13); }
         .card.party-match { border-top-color: #27ae60; }
         .card.party-partial { border-top-color: #f39c12; }
         .reserve-label { font-size: 0.75rem; color: #95a5a6; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
         .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px; }
-        .card h3 { font-size: 1.15rem; color: var(--primary); line-height: 1.25; margin: 0; flex: 1; word-break: break-word; }
-        .card-name-wrap { min-height: 58px; display: flex; align-items: flex-start; flex: 1; }
+        .card h3 { font-size: 1.2rem; color: var(--primary); padding-right: 8px; line-height: 1.25; }
+        .card-name-wrap { min-height: 58px; }
         .fav-btn { background: none; border: none; font-size: 1.3rem; cursor: pointer; transition: transform 0.15s; user-select: none; flex-shrink: 0; }
         .fav-btn:hover { transform: scale(1.25); }
         .card-links { margin-bottom: 10px; font-size: 0.85rem; display: flex; flex-wrap: wrap; gap: 6px; }
@@ -132,11 +132,6 @@
         .incl-label { font-size: 0.75rem; font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.5px; margin: 4px 0 2px; }
 
         /* URL edit */
-        .url-edit-btn { background: none; border: 1px solid #ccc; color: #888; padding: 2px 7px; border-radius: 4px; font-size: 0.75rem; cursor: pointer; margin-left: 4px; vertical-align: middle; }
-        .url-edit-btn:hover { border-color: var(--primary); color: var(--primary); }
-        .url-edit-wrap { margin: 6px 0 4px; display: none; background: #f4f7f4; border: 1px solid #c8e6c9; border-radius: 6px; padding: 8px 10px; }
-        .url-edit-wrap input[type=text] { width: 100%; padding: 5px 8px; border: 1px solid #bbb; border-radius: 4px; font-size: 0.82rem; margin-bottom: 6px; }
-        .url-edit-actions { display: flex; gap: 6px; }
         .btn-url-save { background: var(--primary); color: #fff; border: none; padding: 4px 12px; border-radius: 4px; font-size: 0.8rem; font-weight: 700; cursor: pointer; }
         .btn-url-save:hover { background: #1e401e; }
         .btn-url-cancel { background: #eee; color: #555; border: none; padding: 4px 10px; border-radius: 4px; font-size: 0.8rem; cursor: pointer; }
@@ -208,6 +203,27 @@
         .compare-table tr.diff-row td:first-child { background: #fef3cd !important; }
         .compare-incl { color: #1e8449; font-size: 0.78rem; line-height: 1.5; }
         .compare-excl { color: #c0392b; font-size: 0.78rem; line-height: 1.5; }
+
+
+        /* ── PRINT BUTTON ── */
+        .btn-print { background: #6c3483; color: #fff; border: none; padding: 8px 16px; border-radius: 6px; font-size: 0.85rem; font-weight: 700; cursor: pointer; white-space: nowrap; }
+        .btn-print:hover { background: #512e72; }
+
+        /* ── PRINT STYLES ── */
+        @media print {
+            body { padding: 0; background: #fff; }
+            header, .controls-container, .backup-bar, .backup-bar ~ div,
+            .btn-print, .incl-btn, .incl-panel, .facilities-btn, .facilities-list,
+            .fav-btn, .card-links, .badges, .party-match-bar, .multi-room-alert { display: none !important; }
+            .grid { display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: 10px !important; max-width: 100% !important; }
+            .card { break-inside: avoid; box-shadow: none !important; border: 1px solid #ccc !important; padding: 10px !important; transform: none !important; }
+            .card h3 { font-size: 0.9rem !important; }
+            .price-tier { font-size: 0.8rem !important; margin-bottom: 4px !important; }
+            .details { font-size: 0.75rem !important; }
+            .highlights { font-size: 0.72rem !important; padding: 6px !important; }
+            .reserve-label { font-size: 0.65rem !important; }
+            .sto-badge { font-size: 0.65rem !important; padding: 1px 5px !important; }
+        }
 
         @media (max-width: 700px) {
             body { padding: 12px; }
@@ -359,6 +375,9 @@
     </div>
 </div>
 
+<div style="max-width:1300px;margin:0 auto 10px;display:flex;justify-content:flex-end;">
+    <button class="btn-print" onclick="printDashboard()">🖨 Print / Save PDF</button>
+</div>
 <div class="backup-bar">
     <span class="backup-bar-label">📊 Google Sheets Sync</span>
     <button class="btn-backup" onclick="pushAllToSheet()">⬆ Push All Data to Sheet</button>
@@ -1175,12 +1194,7 @@ async function restoreFromSheet() {
 
 window.toggleFavorite = toggleFavorite;
 
-window.toggleUrlEdit = function(sid) {
-    const wrap = document.getElementById('urledit-' + sid);
-    if (!wrap) return;
-    wrap.style.display = wrap.style.display === 'block' ? 'none' : 'block';
-    if (wrap.style.display === 'block') document.getElementById('urlinput-' + sid).focus();
-};
+
 
 window.saveUrl = async function(sid, lodgeName) {
     const input = document.getElementById('urlinput-' + sid);
@@ -1455,18 +1469,7 @@ function renderLodges() {
 
         let linksBlock = '';
         if (lodge.website) linksBlock += `<a href="${lodge.website}" target="_blank" style="color: #2980b9;">🌐 Website</a>`;
-        linksBlock += `<button class="url-edit-btn" onclick="toggleUrlEdit('${sid}')" title="Edit website URL">✎ Edit URL</button>`;
-
-        const urlEditBlock = `<div class="url-edit-wrap" id="urledit-${sid}">
-            <input type="text" id="urlinput-${sid}" placeholder="https://..." value="${(lodge.website||'').replace(/"/g,'&quot;')}">
-            <div class="url-edit-actions">
-                <button class="btn-url-save" onclick="saveUrl('${sid}','${lodge.name.replace(/'/g,"\\'")}')">💾 Save to Sheet</button>
-                <button class="btn-url-cancel" onclick="toggleUrlEdit('${sid}')">Cancel</button>
-                <span class="url-save-msg" id="urlmsg-${sid}">✓ Saved!</span>
-            </div>
-        </div>`;
-
-        let partyBar = '';
+let partyBar = '';
         let multiRoomAlert = '';
         if (partyActive) {
             if (match === 'ok') partyBar = `<div class="party-match-bar ok">✓ Suits your party of ${partyAdults + partyChildren}</div>`;
@@ -1490,13 +1493,12 @@ function renderLodges() {
             <div class="reserve-label">${lodge.reserve}</div>
             <div class="card-header">
                 <div class="card-name-wrap"><h3>${lodge.name}</h3></div>
-                <div style="display:flex;align-items:flex-start;gap:6px;flex-shrink:0;padding-top:2px;">
+                <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
                     <span class="sto-badge">STO: ${(function(v){ if(typeof v==='number') return Math.round(v*100)+'%'; v=String(v); return (v.includes('%')||v.includes('BAR')||v.toUpperCase().includes('T.B.A')) ? v : v+'%'; })(lodge.sto)}</span>
                     <button class="fav-btn" title="Toggle Favourite" onclick="toggleFavorite('${lodge.name.replace(/'/g,"\\'")}')">${isFav ? '❤️' : '🤍'}</button>
                 </div>
             </div>
             ${linksBlock ? `<div class="card-links">${linksBlock}</div>` : ''}
-            ${urlEditBlock}
             ${partyBar}
             <div class="price-tier">${lodge.price}</div>
             ${multiRoomAlert}
@@ -1525,7 +1527,7 @@ function renderLodges() {
             <div id="fac-${sid}" class="facilities-list" style="display:none;">
                 <ul>${facHTML}</ul>
             </div>
-            `;
+        </div>`;
     }).join('');
 
 
