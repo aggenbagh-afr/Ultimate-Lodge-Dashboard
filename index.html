@@ -1690,7 +1690,11 @@ let partyBar = '';
 
 }
     // Double RAF + timeout ensures fonts and layout are fully settled
-    requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(equaliseCardRows, 50)));
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setTimeout(equaliseCardRows, 80);
+      });
+    });
 
 
 
@@ -1772,7 +1776,7 @@ favoritesFilter.addEventListener('change', renderLodges);
 sortFilter.addEventListener('change', renderLodges);
 
 populateDropdowns();
-window.addEventListener('resize', () => { clearTimeout(window._eqTimer); window._eqTimer = setTimeout(equaliseCardRows, 150); });
+window.addEventListener('resize', () => { clearTimeout(window._eqTimer); window._eqTimer = setTimeout(equaliseCardRows, 180); });
 
 // ═══════════════════════════════════════════════════
 // AUTO-LOAD FROM SHEET ON STARTUP
@@ -1976,19 +1980,18 @@ function renderCompareTable() {
 function resizeAllHeaders() {
   document.querySelectorAll('.card h3').forEach(h3 => {
     let size = 1.15;
-    h3.style.fontSize = size + 'rem';
-    const computed = getComputedStyle(h3);
-    const lineHeight = parseFloat(computed.lineHeight);
-    const maxH = lineHeight * 2 + 4;
-    while (h3.scrollHeight > maxH && size > 0.75) {
-      size -= 0.03;
-      h3.style.fontSize = size + 'rem';
+    h3.style.fontSize = `${size}rem`;
+    h3.style.lineHeight = '1.25';
+    const maxHeightForTwoLines = 2.8 * 16;
+    while (h3.scrollHeight > maxHeightForTwoLines && size > 0.78) {
+      size -= 0.025;
+      h3.style.fontSize = `${size}rem`;
     }
   });
 }
 
 // ═══════════════════════════════════════════════════
-// ROW EQUALISER — aligns card sections across each grid row
+// ROW EQUALISER — FINAL VERSION
 // ═══════════════════════════════════════════════════
 function equaliseCardRows() {
     const grid = document.getElementById('lodgeGrid');
@@ -1996,44 +1999,46 @@ function equaliseCardRows() {
     const cards = Array.from(grid.querySelectorAll('.card'));
     if (cards.length < 2) return;
 
-    const rowClasses = ['cr-reserve','cr-name','cr-links','cr-price',
-        'cr-accom','cr-cap','cr-highlights','cr-badges','cr-incl','cr-fac'];
+    const rowClasses = [
+      'cr-reserve','cr-name','cr-links','cr-price',
+      'cr-accom','cr-cap','cr-highlights','cr-badges',
+      'cr-incl','cr-fac'
+    ];
 
-    // ← Resize headers FIRST so .cr-name is already optimal
+    // 1. Resize headers first
     resizeAllHeaders();
 
-    // Step 1: Reset ALL minHeights so we measure natural sizes
+    // 2. Reset all heights
     rowClasses.forEach(cls => {
-        cards.forEach(card => {
-            const el = card.querySelector('.' + cls);
-            if (el) { el.style.minHeight = ''; el.style.height = ''; }
-        });
+      cards.forEach(card => {
+        const el = card.querySelector('.' + cls);
+        if (el) { el.style.minHeight = ''; el.style.height = ''; }
+      });
     });
 
-    // Step 2: Force reflow then measure
+    // 3. Force layout + small delay for font rendering
     void grid.offsetHeight;
+    setTimeout(() => {
+      const tops = cards.map(c => Math.round(c.getBoundingClientRect().top));
+      const uniqueTops = [...new Set(tops)];
+      const rows = uniqueTops.map(t => cards.filter((c, i) => tops[i] === t));
 
-    // Step 3: Detect columns by grouping cards with same top position
-    const tops = cards.map(c => Math.round(c.getBoundingClientRect().top));
-    const uniqueTops = [...new Set(tops)];
-    const rows = uniqueTops.map(t => cards.filter((c, i) => tops[i] === t));
-
-    // Step 4: For each row, equalise each section
-    rows.forEach(rowCards => {
+      rows.forEach(rowCards => {
         rowClasses.forEach(cls => {
-            const heights = rowCards.map(card => {
-                const el = card.querySelector('.' + cls);
-                return el ? el.getBoundingClientRect().height : 0;
+          let maxH = 0;
+          rowCards.forEach(card => {
+            const el = card.querySelector('.' + cls);
+            if (el) { const h = el.getBoundingClientRect().height; if (h > maxH) maxH = h; }
+          });
+          if (maxH > 0) {
+            rowCards.forEach(card => {
+              const el = card.querySelector('.' + cls);
+              if (el) el.style.minHeight = `${maxH}px`;
             });
-            const maxH = Math.max(...heights);
-            if (maxH > 0) {
-                rowCards.forEach(card => {
-                    const el = card.querySelector('.' + cls);
-                    if (el) el.style.minHeight = maxH + 'px';
-                });
-            }
+          }
         });
-    });
+      });
+    }, 30);
 }
 
 
