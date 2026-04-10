@@ -141,13 +141,7 @@
         .btn-url-cancel { background: #eee; color: #555; border: none; padding: 4px 10px; border-radius: 4px; font-size: 0.8rem; cursor: pointer; }
         .url-save-msg { font-size: 0.75rem; color: #27ae60; margin-left: 6px; display: none; }
 
-        /* Notes */
-        .notes-wrap { margin-top: 8px; }
-        .notes-toggle { background: none; border: 1px dashed #bbb; color: #888; padding: 4px 10px; border-radius: 5px; font-size: 0.78rem; cursor: pointer; width: 100%; text-align: left; }
-        .notes-toggle:hover { border-color: var(--primary); color: var(--primary); }
-        .notes-area { display: none; width: 100%; margin-top: 6px; border: 1px solid #ddd; border-radius: 5px; padding: 7px; font-size: 0.82rem; resize: vertical; min-height: 55px; font-family: inherit; color: #333; }
-        .notes-area:focus { outline: none; border-color: var(--primary); }
-        .notes-saved { font-size: 0.75rem; color: #27ae60; margin-top: 3px; display: none; }
+        
 
         /* ── MODAL ── */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.55); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 20px; }
@@ -1145,6 +1139,15 @@ async function restoreFromSheet() {
             }
             if (row.include && row.include.toString().trim()) lodge.include = row.include.toString().trim();
             if (row.exclude && row.exclude.toString().trim()) lodge.exclude = row.exclude.toString().trim();
+            // Capacity fields from verifier tool
+            if (row.maxPax !== undefined && row.maxPax !== null && row.maxPax !== '') {
+                const mp = parseInt(row.maxPax);
+                if (!isNaN(mp) && mp > 0) { lodge.maxPax = mp; restoredFields++; }
+            }
+            if (row.minAge !== undefined && row.minAge !== null && row.minAge !== '') {
+                const ma = parseInt(row.minAge);
+                if (!isNaN(ma) && ma >= 0) { lodge.minAge = ma; }
+            }
         });
 
         // Restore favourites and notes into live state + localStorage
@@ -1207,20 +1210,7 @@ window.saveUrl = async function(sid, lodgeName) {
     }, 1200);
 };
 
-window.toggleNotes = function(safeName, lodgeName) {
-    const area = document.getElementById('notes-' + safeName);
-    const savedMsg = document.getElementById('noted-' + safeName);
-    if (!area) return;
-    area.style.display = area.style.display === 'block' ? 'none' : 'block';
-    if (area.style.display === 'block') area.focus();
-};
-window.onNoteInput = function(safeName, lodgeName) {
-    const area = document.getElementById('notes-' + safeName);
-    if (!area) return;
-    saveNote(lodgeName, area.value);
-    const msg = document.getElementById('noted-' + safeName);
-    if (msg) { msg.style.display = 'inline'; setTimeout(() => msg.style.display = 'none', 1500); }
-};
+
 
 // ═══════════════════════════════════════════════════
 // FACILITIES TOGGLE
@@ -1495,12 +1485,10 @@ function renderLodges() {
             }
         }
 
-        const noteVal = getNote(lodge.name).replace(/</g,'&lt;').replace(/>/g,'&gt;');
-
         return `<div class="${cardClass}">
             <div class="reserve-label">${lodge.reserve}</div>
+            <div class="card-name-wrap"><h3>${lodge.name}</h3></div>
             <div class="card-header">
-                <h3>${lodge.name}</h3>
                 <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
                     <span class="sto-badge">STO: ${(function(v){ if(typeof v==='number') return Math.round(v*100)+'%'; v=String(v); return (v.includes('%')||v.includes('BAR')||v.toUpperCase().includes('T.B.A')) ? v : v+'%'; })(lodge.sto)}</span>
                     <button class="fav-btn" title="Toggle Favourite" onclick="toggleFavorite('${lodge.name.replace(/'/g,"\\'")}')">${isFav ? '❤️' : '🤍'}</button>
@@ -1536,26 +1524,19 @@ function renderLodges() {
             <div id="fac-${sid}" class="facilities-list" style="display:none;">
                 <ul>${facHTML}</ul>
             </div>
-            <div class="notes-wrap">
-                <button class="notes-toggle" onclick="toggleNotes('${sid}','${lodge.name.replace(/'/g,"\\'")}')">📝 Personal Notes</button>
-                <textarea class="notes-area" id="notes-${sid}" placeholder="Your notes for this lodge..." oninput="onNoteInput('${sid}','${lodge.name.replace(/'/g,"\\'")}')"><br></textarea>
-                <span class="notes-saved" id="noted-${sid}">✓ Saved</span>
-            </div>
-        </div>`;
+            `;
     }).join('');
 
-    // Restore note content
-    filtered.forEach(lodge => {
-        const sid = safeid(lodge.name);
-        const area = document.getElementById('notes-' + sid);
-        if (area) {
-            const saved = getNote(lodge.name);
-            area.value = saved;
-            if (saved) area.style.display = 'block';
-        }
-    });
+
 }
 
+
+// ═══════════════════════════════════════════════════
+// PRINT / PDF
+// ═══════════════════════════════════════════════════
+function printDashboard() {
+    window.print();
+}
 // ═══════════════════════════════════════════════════
 // NAME SEARCH
 // ═══════════════════════════════════════════════════
