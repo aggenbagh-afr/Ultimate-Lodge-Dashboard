@@ -331,6 +331,29 @@
 
         /* ── PASSWORD LOCK ── */
         .lock-btn { background: #888; color: #fff; border: none; padding: 8px 14px; border-radius: 6px; font-size: 0.82rem; font-weight: 700; cursor: pointer; white-space: nowrap; }
+        .bug-btn { background: #c0392b; color: #fff; border: none; padding: 8px 12px; border-radius: 6px; font-size: 0.82rem; font-weight: 700; cursor: pointer; white-space: nowrap; }
+        .bug-btn:hover { background: #a93226; }
+        /* Bug report modal */
+        .bug-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.55); z-index: 3000; display: flex; align-items: center; justify-content: center; padding: 20px; overflow-y: auto; }
+        .bug-modal-overlay.hidden { display: none; }
+        .bug-modal { background: #fff; border-radius: 12px; padding: 24px; width: 100%; max-width: 600px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+        .bug-modal h2 { color: var(--primary); font-size: 1.1rem; margin-bottom: 4px; }
+        .bug-modal p { font-size: 0.82rem; color: #666; margin-bottom: 16px; }
+        .bug-field { margin-bottom: 12px; }
+        .bug-field label { display: block; font-size: 0.78rem; font-weight: 700; color: #555; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.4px; }
+        .bug-field input, .bug-field select, .bug-field textarea { width: 100%; padding: 7px 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 0.85rem; font-family: inherit; }
+        .bug-field textarea { resize: vertical; min-height: 70px; }
+        .bug-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .bug-sev { display: flex; gap: 6px; }
+        .bug-sev-btn { flex: 1; padding: 6px; border: 1px solid #ddd; border-radius: 5px; font-size: 0.78rem; font-weight: 700; cursor: pointer; text-align: center; background: #f9f9f9; }
+        .bug-sev-btn.low.active { background: #d5f5e3; color: #1e8449; border-color: #a9dfbf; }
+        .bug-sev-btn.med.active { background: #fef9e7; color: #7d6608; border-color: #f9e79f; }
+        .bug-sev-btn.high.active { background: #fadbd8; color: #922b21; border-color: #f1948a; }
+        .bug-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 16px; }
+        .bug-submit { background: var(--primary); color: #fff; border: none; padding: 9px 20px; border-radius: 6px; font-size: 0.85rem; font-weight: 700; cursor: pointer; }
+        .bug-submit:hover { background: #1e401e; }
+        .bug-cancel { background: #eee; color: #555; border: none; padding: 9px 16px; border-radius: 6px; font-size: 0.85rem; font-weight: 700; cursor: pointer; }
+        .bug-output { background: #f0f7f0; border: 1px solid #c8e6c9; border-radius: 6px; padding: 10px; font-size: 0.78rem; font-family: monospace; white-space: pre-wrap; margin-top: 12px; max-height: 200px; overflow-y: auto; display: none; }
         .lock-btn:hover { background: #666; }
         .lock-btn.unlocked { background: #27ae60; }
         .sync-locked { display: none; }
@@ -361,6 +384,7 @@
         <button class="btn-clear-search" onclick="clearSearch()" title="Clear search">✕</button>
         <span class="search-hint" id="searchHint"></span>
         <button class="lock-btn" id="lockBtn" onclick="toggleSyncLock()" style="margin-left:auto;">🔒 Admin</button>
+        <button class="bug-btn" onclick="openBugReport()" title="Report a bug">🐛 Bug</button>
         <div id="syncControls" style="display:none;flex-wrap:wrap;gap:8px;align-items:center;">
             <button class="btn-backup" onclick="pushAllToSheet()">⬆ Push All</button>
             <button class="btn-restore" onclick="restoreFromSheet()">⬇ Restore</button>
@@ -1665,7 +1689,8 @@ let partyBar = '';
 
 
 }
-    requestAnimationFrame(equaliseCardRows);
+    // Double RAF + timeout ensures fonts and layout are fully settled
+    requestAnimationFrame(() => requestAnimationFrame(() => setTimeout(equaliseCardRows, 50)));
 
 
 
@@ -1957,27 +1982,24 @@ function equaliseCardRows() {
     const rowClasses = ['cr-reserve','cr-name','cr-links','cr-price',
         'cr-accom','cr-cap','cr-highlights','cr-badges','cr-incl','cr-fac'];
 
-    // Reset heights
+    // Step 1: Reset ALL minHeights so we measure natural sizes
     rowClasses.forEach(cls => {
         cards.forEach(card => {
             const el = card.querySelector('.' + cls);
-            if (el) el.style.minHeight = '';
+            if (el) { el.style.minHeight = ''; el.style.height = ''; }
         });
     });
 
-    // Calculate columns from actual card positions
-    if (cards.length === 0) return;
-    const firstTop = cards[0].getBoundingClientRect().top;
-    let cols = 0;
-    for (let i = 0; i < cards.length; i++) {
-        if (Math.abs(cards[i].getBoundingClientRect().top - firstTop) < 5) cols++;
-        else break;
-    }
-    cols = Math.max(1, cols);
+    // Step 2: Force reflow then measure
+    void grid.offsetHeight;
 
-    // Equalise each row
-    for (let i = 0; i < cards.length; i += cols) {
-        const rowCards = cards.slice(i, i + cols);
+    // Step 3: Detect columns by grouping cards with same top position
+    const tops = cards.map(c => Math.round(c.getBoundingClientRect().top));
+    const uniqueTops = [...new Set(tops)];
+    const rows = uniqueTops.map(t => cards.filter((c, i) => tops[i] === t));
+
+    // Step 4: For each row, equalise each section
+    rows.forEach(rowCards => {
         rowClasses.forEach(cls => {
             const heights = rowCards.map(card => {
                 const el = card.querySelector('.' + cls);
@@ -1991,8 +2013,68 @@ function equaliseCardRows() {
                 });
             }
         });
-    }
+    });
 }
+
+
+// ═══════════════════════════════════════════════════
+// BUG REPORT
+// ═══════════════════════════════════════════════════
+function openBugReport() {
+    document.getElementById('bugModal').classList.remove('hidden');
+    // Clear previous
+    ['bug-name','bug-area','bug-expected','bug-actual','bug-steps','bug-lodge','bug-browser'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+    });
+    document.getElementById('bug-sev').value = '';
+    document.querySelectorAll('.bug-sev-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('bugOutput').style.display = 'none';
+}
+
+function closeBugReport() {
+    document.getElementById('bugModal').classList.add('hidden');
+}
+
+function setBugSev(val, el) {
+    document.getElementById('bug-sev').value = val;
+    document.querySelectorAll('.bug-sev-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+}
+
+function copyBugReport() {
+    const g = id => { const e = document.getElementById(id); return e ? e.value.trim() : ''; };
+    const actual = g('bug-actual');
+    if (!actual) { alert('Please describe what actually happened.'); return; }
+
+    let out = '=== BUG REPORT ===\n';
+    out += 'Date: ' + new Date().toLocaleDateString('en-ZA') + '\n';
+    if (g('bug-name'))    out += 'Reporter: '  + g('bug-name')    + '\n';
+    if (g('bug-area'))    out += 'Area: '      + g('bug-area')    + '\n';
+    if (g('bug-sev'))     out += 'Severity: '  + g('bug-sev')     + '\n';
+    if (g('bug-lodge'))   out += 'Lodge: '     + g('bug-lodge')   + '\n';
+    if (g('bug-browser')) out += 'Browser: '   + g('bug-browser') + '\n';
+    if (g('bug-expected'))out += 'Expected: '  + g('bug-expected')+ '\n';
+    out += 'Actual: ' + actual + '\n';
+    if (g('bug-steps'))   out += 'Steps: '     + g('bug-steps')   + '\n';
+    out += '=== END ===';
+
+    const box = document.getElementById('bugOutput');
+    box.style.display = 'block';
+    box.textContent = out;
+
+    navigator.clipboard.writeText(out).then(() => {
+        alert('Bug report copied to clipboard! Send it to Hein.');
+        closeBugReport();
+    }).catch(() => {
+        alert('Copy the text above and send it to Hein.');
+    });
+}
+
+// Close bug modal on overlay click
+document.getElementById('bugModal').addEventListener('click', function(e) {
+    if (e.target === this) closeBugReport();
+});
 
 </script>
 
@@ -2015,6 +2097,72 @@ function equaliseCardRows() {
       </div>
     </div>
     <div class="compare-table-wrap" id="compareTableWrap"></div>
+  </div>
+</div>
+
+
+<!-- ══════════ BUG REPORT MODAL ══════════ -->
+<div class="bug-modal-overlay hidden" id="bugModal">
+  <div class="bug-modal">
+    <h2>🐛 Report a Bug</h2>
+    <p>Fill in what you can — the more detail the better. Hit Copy &amp; Close when done.</p>
+    <div class="bug-row">
+      <div class="bug-field">
+        <label>Your name</label>
+        <input type="text" id="bug-name" placeholder="e.g. Janine">
+      </div>
+      <div class="bug-field">
+        <label>Area of the app</label>
+        <select id="bug-area">
+          <option value="">— select —</option>
+          <option>Filters / Search</option>
+          <option>Party Builder</option>
+          <option>Lodge Cards</option>
+          <option>Inclusions &amp; Exclusions</option>
+          <option>Lodge Facilities</option>
+          <option>Compare Tool</option>
+          <option>Print Tiles</option>
+          <option>Print List</option>
+          <option>Google Sheets Sync</option>
+          <option>Favourites</option>
+          <option>Other</option>
+        </select>
+      </div>
+    </div>
+    <div class="bug-field">
+      <label>Severity</label>
+      <div class="bug-sev">
+        <div class="bug-sev-btn low" onclick="setBugSev('Low',this)">Low</div>
+        <div class="bug-sev-btn med" onclick="setBugSev('Medium',this)">Medium</div>
+        <div class="bug-sev-btn high" onclick="setBugSev('High',this)">High</div>
+      </div>
+      <input type="hidden" id="bug-sev" value="">
+    </div>
+    <div class="bug-field">
+      <label>What did you expect?</label>
+      <textarea id="bug-expected" placeholder="e.g. Clicking Compare should open the comparison table"></textarea>
+    </div>
+    <div class="bug-field">
+      <label>What actually happened?</label>
+      <textarea id="bug-actual" placeholder="e.g. Nothing happened / page went blank / wrong data shown"></textarea>
+    </div>
+    <div class="bug-row">
+      <div class="bug-field">
+        <label>Steps to reproduce</label>
+        <textarea id="bug-steps" placeholder="1. Filter by Timbavati&#10;2. Click Compare&#10;3. ..."></textarea>
+      </div>
+      <div class="bug-field">
+        <label>Lodge name (if relevant)</label>
+        <input type="text" id="bug-lodge" placeholder="e.g. Chitwa Chitwa">
+        <label style="margin-top:8px;">Browser / device</label>
+        <input type="text" id="bug-browser" placeholder="e.g. Chrome on Windows">
+      </div>
+    </div>
+    <div class="bug-output" id="bugOutput"></div>
+    <div class="bug-actions">
+      <button class="bug-cancel" onclick="closeBugReport()">Close</button>
+      <button class="bug-submit" onclick="copyBugReport()">📋 Copy &amp; Close</button>
+    </div>
   </div>
 </div>
 
