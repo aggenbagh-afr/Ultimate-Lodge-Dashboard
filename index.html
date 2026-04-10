@@ -1690,12 +1690,8 @@ let partyBar = '';
 
 }
     // Double RAF + timeout ensures fonts and layout are fully settled
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        setTimeout(resizeAllHeaders, 60);
-        setTimeout(equaliseCardRows, 100);
-      });
-    });
+    // Resize headers first, then equalise AFTER resize is truly done
+    resizeAllHeaders(equaliseCardRows);
 
 
 
@@ -1777,7 +1773,7 @@ favoritesFilter.addEventListener('change', renderLodges);
 sortFilter.addEventListener('change', renderLodges);
 
 populateDropdowns();
-window.addEventListener('resize', () => { clearTimeout(window._eqTimer); window._eqTimer = setTimeout(equaliseCardRows, 180); });
+window.addEventListener('resize', () => { clearTimeout(window._eqTimer); window._eqTimer = setTimeout(() => resizeAllHeaders(equaliseCardRows), 180); });
 
 // ═══════════════════════════════════════════════════
 // AUTO-LOAD FROM SHEET ON STARTUP
@@ -1978,25 +1974,47 @@ function renderCompareTable() {
 // ═══════════════════════════════════════════════════
 // AUTO-RESIZE LODGE NAME HEADERS TO MAX 2 LINES
 // ═══════════════════════════════════════════════════
-function resizeAllHeaders() {
-  const headers = document.querySelectorAll('.card h3');
-  if (headers.length === 0) return;
-  headers.forEach(h3 => {
+function resizeAllHeaders(callback) {
+  const cards = document.querySelectorAll('.card');
+  if (!cards.length) { if (callback) callback(); return; }
+
+  // Offscreen stage at real card width — forces synchronous layout
+  const stage = document.createElement('div');
+  stage.style.cssText = 'position:fixed;top:-9999px;left:-9999px;visibility:hidden;pointer-events:none;';
+  document.body.appendChild(stage);
+
+  cards.forEach(card => {
+    const h3 = card.querySelector('h3');
+    if (!h3) return;
+
+    // Reset to full size
     h3.style.fontSize = '1.15rem';
     h3.style.lineHeight = '1.25';
+
+    // Clone with real card width
+    const cardW = card.getBoundingClientRect().width || 280;
+    const clone = document.createElement('div');
+    clone.style.cssText = `width:${cardW - 80}px;font-family:inherit;font-size:1.15rem;line-height:1.25;font-weight:700;word-break:break-word;padding:0;margin:0;`;
+    clone.textContent = h3.textContent;
+    stage.appendChild(clone);
+    void clone.offsetHeight; // force layout
+
+    const lineH = parseFloat(getComputedStyle(clone).lineHeight) || 20;
+    const maxH = lineH * 2 + 1;
+
+    let size = 1.15;
+    while (clone.scrollHeight > maxH && size > 0.78) {
+      size = Math.round((size - 0.025) * 1000) / 1000;
+      clone.style.fontSize = size + 'rem';
+      void clone.offsetHeight;
+    }
+
+    h3.style.fontSize = size + 'rem';
+    stage.removeChild(clone);
   });
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      headers.forEach(h3 => {
-        let size = 1.15;
-        const maxHeightForTwoLines = 2.8 * 16;
-        while (h3.scrollHeight > maxHeightForTwoLines + 2 && size > 0.78) {
-          size -= 0.025;
-          h3.style.fontSize = `${size}rem`;
-        }
-      });
-    });
-  });
+
+  document.body.removeChild(stage);
+  if (callback) callback();
 }
 
 // ═══════════════════════════════════════════════════
@@ -2110,12 +2128,11 @@ document.getElementById('bugModal').addEventListener('click', function(e) {
 
 // Safety net — run resize + equalise after full page load
 window.addEventListener('load', () => {
-  setTimeout(() => {
-    resizeAllHeaders();
-    setTimeout(equaliseCardRows, 80);
-  }, 150);
+  setTimeout(() => resizeAllHeaders(equaliseCardRows), 200);
 });
 
+
+window.addEventListener('load', () => { resizeAllHeaders(equaliseCardRows); });
 </script>
 
 <!-- ══════════ COMPARE MODAL ══════════ -->
