@@ -1692,7 +1692,8 @@ let partyBar = '';
     // Double RAF + timeout ensures fonts and layout are fully settled
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        setTimeout(equaliseCardRows, 80);
+        setTimeout(resizeAllHeaders, 60);
+        setTimeout(equaliseCardRows, 100);
       });
     });
 
@@ -1978,15 +1979,23 @@ function renderCompareTable() {
 // AUTO-RESIZE LODGE NAME HEADERS TO MAX 2 LINES
 // ═══════════════════════════════════════════════════
 function resizeAllHeaders() {
-  document.querySelectorAll('.card h3').forEach(h3 => {
-    let size = 1.15;
-    h3.style.fontSize = `${size}rem`;
+  const headers = document.querySelectorAll('.card h3');
+  if (headers.length === 0) return;
+  headers.forEach(h3 => {
+    h3.style.fontSize = '1.15rem';
     h3.style.lineHeight = '1.25';
-    const maxHeightForTwoLines = 2.8 * 16;
-    while (h3.scrollHeight > maxHeightForTwoLines && size > 0.78) {
-      size -= 0.025;
-      h3.style.fontSize = `${size}rem`;
-    }
+  });
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      headers.forEach(h3 => {
+        let size = 1.15;
+        const maxHeightForTwoLines = 2.8 * 16;
+        while (h3.scrollHeight > maxHeightForTwoLines + 2 && size > 0.78) {
+          size -= 0.025;
+          h3.style.fontSize = `${size}rem`;
+        }
+      });
+    });
   });
 }
 
@@ -2004,9 +2013,6 @@ function equaliseCardRows() {
       'cr-accom','cr-cap','cr-highlights','cr-badges',
       'cr-incl','cr-fac'
     ];
-
-    // 1. Resize headers first
-    resizeAllHeaders();
 
     // 2. Reset all heights
     rowClasses.forEach(cls => {
@@ -2099,6 +2105,15 @@ function copyBugReport() {
 // Close bug modal on overlay click
 document.getElementById('bugModal').addEventListener('click', function(e) {
     if (e.target === this) closeBugReport();
+});
+
+
+// Safety net — run resize + equalise after full page load
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    resizeAllHeaders();
+    setTimeout(equaliseCardRows, 80);
+  }, 150);
 });
 
 </script>
