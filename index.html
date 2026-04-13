@@ -492,6 +492,7 @@
             <label>Must-have Facility</label>
             <select id="facilityFilter">
                 <option value="all">Any Facility</option>
+                <option value="Pool">Pool</option>
                 <option value="Spa">Spa</option>
                 <option value="Gym">Gym</option>
                 <option value="WiFi">WiFi</option>
@@ -1598,7 +1599,11 @@ function renderLodges() {
         if (priceVal !== 'all' && !lodge.price.toLowerCase().includes(priceVal.toLowerCase())) return false;
         if (facilityVal !== 'all') {
             const facs = lodgeFacilitiesMap[lodge.name] || [];
-            if (!facs.some(f => f.toLowerCase().includes(facilityVal.toLowerCase()))) return false;
+            const facMatch = facs.some(f => f.toLowerCase().includes(facilityVal.toLowerCase()));
+            // For Pool, also check highlights text since many lodges mention pools there
+            const highlightMatch = facilityVal.toLowerCase() === 'pool' &&
+                lodge.highlights && lodge.highlights.toLowerCase().includes('pool');
+            if (!facMatch && !highlightMatch) return false;
         }
         if (needsExclusive && !lodge.exclusive) return false;
         if (needsFavs && !favs.includes(lodge.name)) return false;
