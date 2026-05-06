@@ -372,6 +372,28 @@
         .lock-btn.unlocked { background: #27ae60; }
         .sync-locked { display: none; }
 
+
+        /* ── LIST VIEW ── */
+        .btn-view { background: var(--card); color: var(--primary); border: 1.5px solid var(--primary); padding: 7px 14px; border-radius: 6px; font-size: 0.82rem; font-weight: 700; cursor: pointer; white-space: nowrap; }
+        .btn-view.active { background: var(--primary); color: #fff; }
+        .btn-view:hover { background: var(--primary); color: #fff; }
+        .lodge-list { width: 100%; border-collapse: collapse; max-width: 1300px; margin: 0 auto; font-size: 0.82rem; }
+        .lodge-list thead tr { background: var(--primary); color: #fff; }
+        .lodge-list thead th { padding: 9px 12px; text-align: left; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.3px; white-space: nowrap; }
+        .lodge-list tbody tr:nth-child(even) { background: #f2f7f2; }
+        .lodge-list tbody tr:nth-child(odd) { background: #fff; }
+        .lodge-list tbody tr:hover { background: #e0f0e0; cursor: default; }
+        .lodge-list td { padding: 7px 12px; border-bottom: 0.5px solid #e0e8e0; vertical-align: middle; color: var(--text); }
+        .lodge-list td.ll-reserve { font-size: 0.72rem; color: #888; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
+        .lodge-list td.ll-name { font-weight: 700; color: var(--primary); min-width: 160px; }
+        .lodge-list td.ll-name a { color: var(--primary); text-decoration: none; }
+        .lodge-list td.ll-name a:hover { text-decoration: underline; }
+        .ll-sto { display: inline-block; background: #fff8dc; color: #7f6000; border: 0.5px solid #f0c040; border-radius: 3px; padding: 1px 5px; font-size: 0.72rem; font-weight: 700; }
+        .ll-age { display: inline-block; background: #97BC62; color: #173404; border-radius: 3px; padding: 1px 5px; font-size: 0.72rem; font-weight: 700; }
+        .ll-exc { display: inline-block; background: #2980b9; color: #fff; border-radius: 3px; padding: 1px 4px; font-size: 0.7rem; margin-left: 4px; }
+        .ll-star { color: #d35400; font-size: 0.78rem; white-space: nowrap; }
+        .ll-fav { background: none; border: none; cursor: pointer; font-size: 0.9rem; padding: 0; }
+
         @media (max-width: 700px) {
             body { padding: 12px; }
             .control-group { min-width: 140px; max-width: 100%; }
@@ -492,7 +514,6 @@
             <label>Must-have Facility</label>
             <select id="facilityFilter">
                 <option value="all">Any Facility</option>
-                <option value="Pool">Pool</option>
                 <option value="Spa">Spa</option>
                 <option value="Gym">Gym</option>
                 <option value="WiFi">WiFi</option>
@@ -528,7 +549,9 @@
     </div>
 </div>
 
-<div style="max-width:1300px;margin:0 auto 10px;display:flex;justify-content:flex-end;gap:10px;">
+<div style="max-width:1300px;margin:0 auto 10px;display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;">
+    <button class="btn-view active" id="btnTileView" onclick="setView('tile')">▦ Tile View</button>
+    <button class="btn-view" id="btnListView" onclick="setView('list')">☰ List View</button>
     <button class="btn-clear" onclick="clearAllFilters()">✕ Clear Filters</button>
     <button class="btn-compare" onclick="openCompare()">⚖ Compare Lodges</button>
     <button class="btn-print-tile" onclick="printMode('tile')">🖨 Print Tiles</button>
@@ -543,6 +566,7 @@
     </div>
 </div>
 <div class="grid" id="lodgeGrid"></div>
+<div id="lodgeListWrap" style="display:none;max-width:1300px;margin:0 auto;overflow-x:auto;"><table class="lodge-list" id="lodgeListTable"><thead><tr><th></th><th>Reserve</th><th>Lodge</th><th>STO</th><th>Min Age</th><th>Accommodation</th><th>Capacity</th><th>Rating</th></tr></thead><tbody id="lodgeListBody"></tbody></table></div>
 
 <div class="modal-overlay hidden" id="ageModal">
     <div class="modal">
@@ -1599,11 +1623,7 @@ function renderLodges() {
         if (priceVal !== 'all' && !lodge.price.toLowerCase().includes(priceVal.toLowerCase())) return false;
         if (facilityVal !== 'all') {
             const facs = lodgeFacilitiesMap[lodge.name] || [];
-            const facMatch = facs.some(f => f.toLowerCase().includes(facilityVal.toLowerCase()));
-            // For Pool, also check highlights text since many lodges mention pools there
-            const highlightMatch = facilityVal.toLowerCase() === 'pool' &&
-                lodge.highlights && lodge.highlights.toLowerCase().includes('pool');
-            if (!facMatch && !highlightMatch) return false;
+            if (!facs.some(f => f.toLowerCase().includes(facilityVal.toLowerCase()))) return false;
         }
         if (needsExclusive && !lodge.exclusive) return false;
         if (needsFavs && !favs.includes(lodge.name)) return false;
@@ -1627,6 +1647,13 @@ function renderLodges() {
 
     if (filtered.length === 0) {
         container.innerHTML = `<div class="no-results"><span class="emoji">🦁</span>No lodges found matching your criteria.<br><small>Try adjusting your filters.</small></div>`;
+        return;
+    }
+
+    // Render correct view
+    if (currentView === 'list') {
+        container.innerHTML = '';
+        renderListView(filtered);
         return;
     }
 
@@ -2101,6 +2128,49 @@ document.getElementById('bugModal').addEventListener('click', function(e) {
 
 
 window.addEventListener('load', equaliseCardRows);
+
+// ═══════════════════════════════════════════════════
+// LIST / TILE VIEW TOGGLE
+// ═══════════════════════════════════════════════════
+let currentView = 'tile';
+
+function setView(view) {
+    currentView = view;
+    document.getElementById('lodgeGrid').style.display = view === 'tile' ? '' : 'none';
+    document.getElementById('lodgeListWrap').style.display = view === 'list' ? '' : 'none';
+    document.getElementById('btnTileView').classList.toggle('active', view === 'tile');
+    document.getElementById('btnListView').classList.toggle('active', view === 'list');
+    renderLodges();
+}
+
+function renderListView(filtered) {
+    const favs = getFavorites();
+    const rows = filtered.map(lodge => {
+        const isFav = favs.includes(lodge.name);
+        const sto = (function(v) {
+            if (typeof v === 'number') return Math.round(v * 100) + '%';
+            v = String(v);
+            return (v.includes('%') || v.includes('BAR') || v.toUpperCase().includes('T.B.A')) ? v : v + '%';
+        })(lodge.sto);
+        const age = lodge.minAge === 0 ? 'All Ages' : lodge.minAge + '+';
+        const websiteLink = lodge.website
+            ? `<a href="${lodge.website}" target="_blank">${lodge.name}</a>`
+            : lodge.name;
+        return `<tr>
+            <td><button class="ll-fav" onclick="toggleFavorite('${lodge.name.replace(/'/g,"\'")}')">
+                ${isFav ? '❤️' : '🤍'}</button></td>
+            <td class="ll-reserve">${lodge.reserve}</td>
+            <td class="ll-name">${websiteLink}${lodge.exclusive ? '<span class="ll-exc">Excl.</span>' : ''}</td>
+            <td><span class="ll-sto">${sto}</span></td>
+            <td><span class="ll-age">${age}</span></td>
+            <td>${lodge.type}</td>
+            <td>${lodge.maxPax ? lodge.maxPax + ' pax' : '—'}</td>
+            <td class="ll-star">${lodge.price}</td>
+        </tr>`;
+    }).join('');
+    document.getElementById('lodgeListBody').innerHTML = rows;
+}
+
 </script>
 
 <!-- ══════════ COMPARE MODAL ══════════ -->
