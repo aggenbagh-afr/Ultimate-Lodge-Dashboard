@@ -1733,11 +1733,9 @@ let partyBar = '';
         </div>`;
     }).join('');
 
-
+    // Equalise card rows after render
+    requestAnimationFrame(() => requestAnimationFrame(() => equaliseCardRows()));
 }
-    // Double RAF + timeout ensures fonts and layout are fully settled
-    // Resize headers first, then equalise AFTER resize is truly done
-    equaliseCardRows();
 
 
 
