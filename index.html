@@ -15,10 +15,10 @@
 
         /* ── FILTER PANEL ── */
         .controls-container { background: var(--card); padding: 18px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.06); margin-bottom: 15px; max-width: 1300px; margin-left: auto; margin-right: auto; }
-        .filter-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: flex-start; margin-bottom: 10px; }
+        .filter-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; justify-content: center; margin-bottom: 10px; }
         .filter-row:last-child { margin-bottom: 0; }
         .control-group { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 160px; max-width: 220px; }
-        .control-group label { font-weight: 600; font-size: 0.8rem; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
+        .control-group label { font-weight: 600; font-size: 0.8rem; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px; }
         select, input[type="number"] { padding: 8px 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 0.9rem; outline: none; background: #fafafa; width: 100%; }
         select:focus, input[type="number"]:focus { border-color: var(--primary); background: #fff; }
 
@@ -35,10 +35,10 @@
         .party-summary { font-size: 0.82rem; color: #555; font-style: italic; padding: 4px 10px; background: #fff; border-radius: 5px; border: 1px solid #ddd; white-space: nowrap; }
 
         /* checkbox / utility */
-        .checkbox-group { flex-direction: row; align-items: center; gap: 8px; min-width: auto; max-width: none; white-space: nowrap; }
+        .checkbox-group { flex-direction: row; align-items: center; gap: 8px; padding-top: 18px; min-width: 140px; max-width: 200px; }
         .checkbox-group input { width: 16px; height: 16px; cursor: pointer; accent-color: var(--primary); flex-shrink: 0; }
-        .checkbox-group label { cursor: pointer; user-select: none; font-size: 0.88rem; font-weight: bold; color: var(--primary); }
-        .fav-checkbox-wrap { padding: 0; border: none; background: none; }
+        .checkbox-group label { cursor: pointer; user-select: none; font-size: 0.88rem; font-weight: bold; }
+        .fav-checkbox-wrap { background: #fff3cd; padding: 8px 14px; border-radius: 6px; border: 1px solid #ffe69c; }
 
         .filter-actions { display: flex; gap: 10px; justify-content: center; padding-top: 4px; }
         .btn-clear { background: #e74c3c; color: white; border: none; padding: 7px 18px; border-radius: 6px; font-size: 0.85rem; font-weight: 700; cursor: pointer; }
@@ -73,45 +73,14 @@
         .sort-bar select { flex: 0 0 auto; width: auto; min-width: 180px; font-size: 0.85rem; padding: 6px 10px; }
 
         /* ── GRID / CARDS ── */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 20px; max-width: 1300px; margin: 0 auto; align-items: start; grid-auto-rows: auto; }
-        .card { background: var(--card); border-radius: 10px; padding: 18px; box-shadow: 0 3px 10px rgba(0,0,0,0.07); transition: transform 0.18s, box-shadow 0.18s; border-top: 5px solid var(--primary); display: grid; grid-template-rows: auto auto auto auto auto auto auto auto auto auto; position: relative; }
-        .card-row-reserve { }
-        .card-row-name { display: flex; align-items: flex-start; }
-        .card-row-links { min-height: 28px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
-        .card-row-price { }
-        .card-row-accom { }
-        .card-row-cap { }
-        .card-row-highlights { }
-        .card-row-badges { min-height: 32px; display: flex; gap: 6px; flex-wrap: wrap; align-items: flex-start; margin: 10px 0 12px; }
-        .card-row-incl { margin-top: auto; }
-        .card-row-fac { }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 20px; max-width: 1300px; margin: 0 auto; align-items: start; }
+        .card { background: var(--card); border-radius: 10px; padding: 18px; box-shadow: 0 3px 10px rgba(0,0,0,0.07); transition: transform 0.18s, box-shadow 0.18s; border-top: 5px solid var(--primary); display: flex; flex-direction: column; position: relative; }
         .card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.13); }
-        /* Card row alignment classes */
-        .cr-reserve { }
-        .cr-name { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
-        .cr-links { min-height: 26px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 10px; }
-        .cr-price { }
-        .cr-accom { }
-        .cr-cap { }
-        .cr-highlights { }
-        .cr-badges { margin-top: 10px; margin-bottom: 12px; display: flex; gap: 6px; flex-wrap: wrap; }
-        .cr-incl { margin-top: auto; }
-        .cr-fac { }
         .card.party-match { border-top-color: #27ae60; }
         .card.party-partial { border-top-color: #f39c12; }
         .reserve-label { font-size: 0.75rem; color: #95a5a6; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
         .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 4px; }
-        .card h3 { font-size: 1.15rem; color: var(--primary); padding-right: 8px; line-height: 1.3; }
-        .card-header h3 {
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            height: 2.6em;
-            line-height: 1.3;
-            margin-bottom: 8px;
-        }
-        .card-name-wrap { flex: 1; min-width: 0; }
+        .card h3 { font-size: 1.2rem; color: var(--primary); padding-right: 8px; line-height: 1.25; }
         .fav-btn { background: none; border: none; font-size: 1.3rem; cursor: pointer; transition: transform 0.15s; user-select: none; flex-shrink: 0; }
         .fav-btn:hover { transform: scale(1.25); }
         .card-links { margin-bottom: 10px; font-size: 0.85rem; display: flex; flex-wrap: wrap; gap: 6px; }
@@ -120,17 +89,8 @@
         .price-tier { font-weight: bold; color: var(--accent); font-size: 1rem; margin-bottom: 8px; }
         .details { font-size: 0.85rem; margin-bottom: 4px; color: #555; }
         .details strong { color: #222; }
-        .highlights { margin-top: 8px; background: #f9f9f9; padding: 10px; border-radius: 6px; font-size: 0.83rem; line-height: 1.45; }
-        .highlights-inner {
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            height: calc(1.45em * 3);
-            line-height: 1.45;
-            cursor: default;
-        }
-        .badges { display: flex; gap: 6px; flex-wrap: wrap; }
+        .highlights { margin-top: 8px; background: #f9f9f9; padding: 10px; border-radius: 6px; font-size: 0.83rem; line-height: 1.45; flex-grow: 1; }
+        .badges { margin-top: 10px; display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
         .badge { background: var(--secondary); color: #fff; padding: 3px 8px; border-radius: 10px; font-size: 0.72rem; font-weight: 700; }
         .badge.exclusive { background: #2980b9; }
         .badge.special { background: var(--accent); }
@@ -171,12 +131,23 @@
         .incl-label { font-size: 0.75rem; font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.5px; margin: 4px 0 2px; }
 
         /* URL edit */
+        .url-edit-btn { background: none; border: 1px solid #ccc; color: #888; padding: 2px 7px; border-radius: 4px; font-size: 0.75rem; cursor: pointer; margin-left: 4px; vertical-align: middle; }
+        .url-edit-btn:hover { border-color: var(--primary); color: var(--primary); }
+        .url-edit-wrap { margin: 6px 0 4px; display: none; background: #f4f7f4; border: 1px solid #c8e6c9; border-radius: 6px; padding: 8px 10px; }
+        .url-edit-wrap input[type=text] { width: 100%; padding: 5px 8px; border: 1px solid #bbb; border-radius: 4px; font-size: 0.82rem; margin-bottom: 6px; }
+        .url-edit-actions { display: flex; gap: 6px; }
         .btn-url-save { background: var(--primary); color: #fff; border: none; padding: 4px 12px; border-radius: 4px; font-size: 0.8rem; font-weight: 700; cursor: pointer; }
         .btn-url-save:hover { background: #1e401e; }
         .btn-url-cancel { background: #eee; color: #555; border: none; padding: 4px 10px; border-radius: 4px; font-size: 0.8rem; cursor: pointer; }
         .url-save-msg { font-size: 0.75rem; color: #27ae60; margin-left: 6px; display: none; }
 
-        
+        /* Notes */
+        .notes-wrap { margin-top: 8px; }
+        .notes-toggle { background: none; border: 1px dashed #bbb; color: #888; padding: 4px 10px; border-radius: 5px; font-size: 0.78rem; cursor: pointer; width: 100%; text-align: left; }
+        .notes-toggle:hover { border-color: var(--primary); color: var(--primary); }
+        .notes-area { display: none; width: 100%; margin-top: 6px; border: 1px solid #ddd; border-radius: 5px; padding: 7px; font-size: 0.82rem; resize: vertical; min-height: 55px; font-family: inherit; color: #333; }
+        .notes-area:focus { outline: none; border-color: var(--primary); }
+        .notes-saved { font-size: 0.75rem; color: #27ae60; margin-top: 3px; display: none; }
 
         /* ── MODAL ── */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.55); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 20px; }
@@ -211,8 +182,8 @@
 
 
         /* ── COMPARISON TOOL ── */
-        .btn-compare { background: var(--primary); color: #fff; border: none; padding: 8px 16px; border-radius: 6px; font-size: 0.85rem; font-weight: 700; cursor: pointer; white-space: nowrap; }
-        .btn-compare:hover { background: #1e401e; }
+        .btn-compare { background: #8e44ad; color: #fff; border: none; padding: 8px 16px; border-radius: 6px; font-size: 0.85rem; font-weight: 700; cursor: pointer; white-space: nowrap; }
+        .btn-compare:hover { background: #6c3483; }
         .compare-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 2000; display: flex; align-items: flex-start; justify-content: center; padding: 20px; overflow-y: auto; }
         .compare-modal.hidden { display: none; }
         .compare-box { background: #fff; border-radius: 12px; padding: 24px; width: 100%; max-width: 1400px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
@@ -232,167 +203,16 @@
         .compare-close:hover { background: #888; }
         /* Comparison table */
         .compare-table-wrap { overflow-x: auto; margin-top: 8px; }
-        .compare-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; table-layout: fixed; }
-        .compare-table th { background: var(--primary); color: white; padding: 10px 12px; text-align: left; font-size: 0.85rem; word-break: break-word; }
-        .compare-table th:first-child { width: 130px; background: #1e401e; }
-        .compare-table td { padding: 8px 12px; border-bottom: 1px solid #eee; vertical-align: top; word-break: break-word; overflow-wrap: break-word; }
+        .compare-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+        .compare-table th { background: var(--primary); color: white; padding: 10px 12px; text-align: left; font-size: 0.85rem; white-space: nowrap; }
+        .compare-table th:first-child { min-width: 140px; background: #1e401e; }
+        .compare-table td { padding: 8px 12px; border-bottom: 1px solid #eee; vertical-align: top; }
         .compare-table tr:nth-child(even) td { background: #f9fbf9; }
-        .compare-table td:first-child { font-weight: 700; color: var(--primary); background: #f0f7f0 !important; white-space: nowrap; width: 130px; }
+        .compare-table td:first-child { font-weight: 700; color: var(--primary); background: #f0f7f0 !important; white-space: nowrap; }
         .compare-table tr.diff-row td { background: #fff8dc !important; }
         .compare-table tr.diff-row td:first-child { background: #fef3cd !important; }
         .compare-incl { color: #1e8449; font-size: 0.78rem; line-height: 1.5; }
         .compare-excl { color: #c0392b; font-size: 0.78rem; line-height: 1.5; }
-
-
-        /* ── PRINT BUTTON ── */
-        .btn-print-tile { background: #6c3483; color: #fff; border: none; padding: 8px 16px; border-radius: 6px; font-size: 0.85rem; font-weight: 700; cursor: pointer; white-space: nowrap; }
-        .btn-print-tile:hover { background: #512e72; }
-        .btn-print-list { background: #154360; color: #fff; border: none; padding: 8px 16px; border-radius: 6px; font-size: 0.85rem; font-weight: 700; cursor: pointer; white-space: nowrap; }
-        .btn-print-list:hover { background: #0e2f44; }
-
-        /* ── PRINT SHARED ── */
-        @media print {
-            @page { margin: 1cm; size: A4 landscape; }
-            body { padding: 0 !important; background: #fff !important; }
-            header, .controls-container,
-            .btn-print-tile, .btn-print-list, .btn-compare, .btn-clear,
-            .lock-btn, #syncControls, #backupStatus,
-            .fav-btn, .card-links, .badges,
-            .party-match-bar, .multi-room-alert,
-            .incl-btn, .incl-panel,
-            .facilities-btn, .facilities-list,
-            .modal-overlay, .compare-modal,
-            div[style*="justify-content:flex-end"],
-            div[style*="space-between"] { display: none !important; }
-            .print-header { display: block !important; }
-        }
-
-        /* ── TILE PRINT MODE ── */
-        @media print {
-            body.print-tile .grid {
-                display: grid !important;
-                grid-template-columns: repeat(3, 1fr) !important;
-                gap: 8pt !important;
-                max-width: 100% !important;
-                margin: 0 !important;
-            }
-            body.print-tile .card {
-                break-inside: avoid;
-                box-shadow: none !important;
-                border: 1pt solid #bbb !important;
-                border-top: 3pt solid #2C5F2D !important;
-                padding: 8pt !important;
-                transform: none !important;
-            }
-            body.print-tile .card-name-wrap { min-height: auto !important; }
-            body.print-tile .card h3 { font-size: 8.5pt !important; color: #2C5F2D !important; }
-            body.print-tile .reserve-label { font-size: 7pt !important; }
-            body.print-tile .sto-badge { font-size: 7pt !important; padding: 1pt 4pt !important; }
-            body.print-tile .price-tier { font-size: 7.5pt !important; margin-bottom: 3pt !important; }
-            body.print-tile .details { font-size: 7pt !important; margin-bottom: 1pt !important; }
-            body.print-tile .highlights { font-size: 6.5pt !important; padding: 4pt !important; margin-top: 3pt !important; }
-        }
-
-        /* ── LIST PRINT MODE ── */
-        @media print {
-            /* LIST MODE — one lodge per row, horizontal layout */
-            body.print-list .grid {
-                display: block !important;
-                max-width: 100% !important;
-                margin: 0 !important;
-            }
-            body.print-list .card {
-                display: grid !important;
-                grid-template-columns: 160pt 1fr 1fr !important;
-                grid-template-rows: auto !important;
-                break-inside: avoid !important;
-                box-shadow: none !important;
-                border: none !important;
-                border-bottom: 0.5pt solid #ddd !important;
-                border-left: 3pt solid #2C5F2D !important;
-                border-radius: 0 !important;
-                padding: 6pt 0 6pt 8pt !important;
-                transform: none !important;
-                gap: 0 10pt !important;
-                margin-bottom: 2pt !important;
-            }
-            /* Left column: reserve, name, STO, price, badges */
-            body.print-list .cr-reserve { grid-column: 1; grid-row: 1; font-size: 6pt !important; color: #999 !important; }
-            body.print-list .cr-name { grid-column: 1; grid-row: 2; height: auto !important; min-height: auto !important; }
-            body.print-list .cr-name h3 { font-size: 8.5pt !important; color: #2C5F2D !important; }
-            body.print-list .cr-price { grid-column: 1; grid-row: 3; font-size: 7pt !important; }
-            body.print-list .cr-badges { grid-column: 1; grid-row: 4; margin: 2pt 0 0 !important; }
-            body.print-list .cr-badges .badge { font-size: 6pt !important; padding: 1pt 4pt !important; }
-            body.print-list .sto-badge { font-size: 6pt !important; }
-            /* Middle column: accommodation, capacity, highlights */
-            body.print-list .cr-links { grid-column: 2; grid-row: 1 / 3; display: none !important; }
-            body.print-list .cr-accom { grid-column: 2; grid-row: 1; font-size: 6.5pt !important; }
-            body.print-list .cr-cap { grid-column: 2; grid-row: 2; font-size: 6.5pt !important; }
-            body.print-list .cr-highlights { grid-column: 2; grid-row: 3 / 5; font-size: 6.5pt !important; padding: 3pt 5pt !important; margin-top: 0 !important; border-left: 1.5pt solid #97BC62 !important; background: #f9f9f9 !important; border-radius: 0 !important; }
-            body.print-list .cr-highlights .highlights-inner { display: block !important; -webkit-line-clamp: unset !important; overflow: visible !important; }
-            /* Right column: inclusions/exclusions */
-            body.print-list .cr-incl { grid-column: 3; grid-row: 1 / 5; font-size: 6pt !important; }
-            body.print-list .cr-incl .incl-btn { display: none !important; }
-            body.print-list .cr-incl .incl-panel { display: block !important; padding: 0 !important; border: none !important; background: none !important; }
-            body.print-list .cr-incl .incl-section-label { font-size: 6pt !important; margin: 2pt 0 1pt !important; }
-            body.print-list .cr-incl li { font-size: 6pt !important; padding: 0 !important; }
-            body.print-list .cr-fac { display: none !important; }
-        }
-
-        /* hide print header on screen */
-        .print-header { display: none; }
-
-
-        /* ── PASSWORD LOCK ── */
-        .lock-btn { background: #888; color: #fff; border: none; padding: 8px 14px; border-radius: 6px; font-size: 0.82rem; font-weight: 700; cursor: pointer; white-space: nowrap; }
-        .bug-btn { background: #c0392b; color: #fff; border: none; padding: 8px 12px; border-radius: 6px; font-size: 0.82rem; font-weight: 700; cursor: pointer; white-space: nowrap; }
-        .bug-btn:hover { background: #a93226; }
-        /* Bug report modal */
-        .bug-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.55); z-index: 3000; display: flex; align-items: center; justify-content: center; padding: 20px; overflow-y: auto; }
-        .bug-modal-overlay.hidden { display: none; }
-        .bug-modal { background: #fff; border-radius: 12px; padding: 24px; width: 100%; max-width: 600px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
-        .bug-modal h2 { color: var(--primary); font-size: 1.1rem; margin-bottom: 4px; }
-        .bug-modal p { font-size: 0.82rem; color: #666; margin-bottom: 16px; }
-        .bug-field { margin-bottom: 12px; }
-        .bug-field label { display: block; font-size: 0.78rem; font-weight: 700; color: #555; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.4px; }
-        .bug-field input, .bug-field select, .bug-field textarea { width: 100%; padding: 7px 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 0.85rem; font-family: inherit; }
-        .bug-field textarea { resize: vertical; min-height: 70px; }
-        .bug-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .bug-sev { display: flex; gap: 6px; }
-        .bug-sev-btn { flex: 1; padding: 6px; border: 1px solid #ddd; border-radius: 5px; font-size: 0.78rem; font-weight: 700; cursor: pointer; text-align: center; background: #f9f9f9; }
-        .bug-sev-btn.low.active { background: #d5f5e3; color: #1e8449; border-color: #a9dfbf; }
-        .bug-sev-btn.med.active { background: #fef9e7; color: #7d6608; border-color: #f9e79f; }
-        .bug-sev-btn.high.active { background: #fadbd8; color: #922b21; border-color: #f1948a; }
-        .bug-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 16px; }
-        .bug-submit { background: var(--primary); color: #fff; border: none; padding: 9px 20px; border-radius: 6px; font-size: 0.85rem; font-weight: 700; cursor: pointer; }
-        .bug-submit:hover { background: #1e401e; }
-        .bug-cancel { background: #eee; color: #555; border: none; padding: 9px 16px; border-radius: 6px; font-size: 0.85rem; font-weight: 700; cursor: pointer; }
-        .bug-output { background: #f0f7f0; border: 1px solid #c8e6c9; border-radius: 6px; padding: 10px; font-size: 0.78rem; font-family: monospace; white-space: pre-wrap; margin-top: 12px; max-height: 200px; overflow-y: auto; display: none; }
-        .lock-btn:hover { background: #666; }
-        .lock-btn.unlocked { background: #27ae60; }
-        .sync-locked { display: none; }
-
-
-        /* ── LIST VIEW ── */
-        .btn-view { background: var(--card); color: var(--primary); border: 1.5px solid var(--primary); padding: 7px 14px; border-radius: 6px; font-size: 0.82rem; font-weight: 700; cursor: pointer; white-space: nowrap; }
-        .btn-view.active { background: var(--primary); color: #fff; }
-        .btn-view:hover { background: var(--primary); color: #fff; }
-        .lodge-list { width: 100%; border-collapse: collapse; max-width: 1300px; margin: 0 auto; font-size: 0.82rem; }
-        .lodge-list thead tr { background: var(--primary); color: #fff; }
-        .lodge-list thead th { padding: 9px 12px; text-align: left; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.3px; white-space: nowrap; }
-        .lodge-list tbody tr:nth-child(even) { background: #f2f7f2; }
-        .lodge-list tbody tr:nth-child(odd) { background: #fff; }
-        .lodge-list tbody tr:hover { background: #e0f0e0; cursor: default; }
-        .lodge-list td { padding: 7px 12px; border-bottom: 0.5px solid #e0e8e0; vertical-align: middle; color: var(--text); }
-        .lodge-list td.ll-reserve { font-size: 0.72rem; color: #888; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
-        .lodge-list td.ll-name { font-weight: 700; color: var(--primary); min-width: 160px; }
-        .lodge-list td.ll-name a { color: var(--primary); text-decoration: none; }
-        .lodge-list td.ll-name a:hover { text-decoration: underline; }
-        .ll-sto { display: inline-block; background: #fff8dc; color: #7f6000; border: 0.5px solid #f0c040; border-radius: 3px; padding: 1px 5px; font-size: 0.72rem; font-weight: 700; }
-        .ll-age { display: inline-block; background: #97BC62; color: #173404; border-radius: 3px; padding: 1px 5px; font-size: 0.72rem; font-weight: 700; }
-        .ll-exc { display: inline-block; background: #2980b9; color: #fff; border-radius: 3px; padding: 1px 4px; font-size: 0.7rem; margin-left: 4px; }
-        .ll-star { color: #d35400; font-size: 0.78rem; white-space: nowrap; }
-        .ll-fav { background: none; border: none; cursor: pointer; font-size: 0.9rem; padding: 0; }
 
         @media (max-width: 700px) {
             body { padding: 12px; }
@@ -419,13 +239,6 @@
         <button class="btn-search" onclick="doSearch()">Search</button>
         <button class="btn-clear-search" onclick="clearSearch()" title="Clear search">✕</button>
         <span class="search-hint" id="searchHint"></span>
-        <button class="lock-btn" id="lockBtn" onclick="toggleSyncLock()" style="margin-left:auto;">🔒 Admin</button>
-        <button class="bug-btn" onclick="openBugReport()" title="Report a bug">🐛 Bug</button>
-        <div id="syncControls" style="display:none;flex-wrap:wrap;gap:8px;align-items:center;">
-            <button class="btn-backup" onclick="pushAllToSheet()">⬆ Push All</button>
-            <button class="btn-restore" onclick="restoreFromSheet()">⬇ Restore</button>
-            <span class="backup-status idle" id="backupStatus" style="min-width:120px;"></span>
-        </div>
     </div>
 
     <div class="party-row">
@@ -501,6 +314,7 @@
                 <option value="Low Cost">Low Cost / Budget</option>
                 <option value="Mid-Range">Mid-Range</option>
                 <option value="Good Value">Good Value</option>
+                <option value="Fantastic Lux">Fantastic Lux</option>
                 <option value="Luxury">Luxury</option>
                 <option value="Ultra">Ultra Lux</option>
                 <option value="Experience">Experience</option>
@@ -524,13 +338,15 @@
         </div>
         <div class="control-group checkbox-group">
             <input type="checkbox" id="exclusiveFilter">
-            <label for="exclusiveFilter">Exclusive Use / Villas</label>
+            <label for="exclusiveFilter">Exclusive Use / Villas Only</label>
         </div>
         <div class="control-group checkbox-group fav-checkbox-wrap">
             <input type="checkbox" id="favoritesFilter">
-            <label for="favoritesFilter">Favourites ❤️</label>
+            <label for="favoritesFilter" style="color:#d35400;">Favourites Only ❤️</label>
         </div>
-
+        <div class="filter-actions">
+            <button class="btn-clear" onclick="clearAllFilters()">✕ Clear All Filters</button>
+        </div>
     </div>
 </div>
 
@@ -548,24 +364,15 @@
     </div>
 </div>
 
-<div style="max-width:1300px;margin:0 auto 10px;display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;">
-    <button class="btn-view active" id="btnTileView" onclick="setView('tile')">▦ Tile View</button>
-    <button class="btn-view" id="btnListView" onclick="setView('list')">☰ List View</button>
-    <button class="btn-clear" onclick="clearAllFilters()">✕ Clear Filters</button>
+<div class="backup-bar">
+    <span class="backup-bar-label">📊 Google Sheets Sync</span>
+    <button class="btn-backup" onclick="pushAllToSheet()">⬆ Push All Data to Sheet</button>
+    <button class="btn-restore" onclick="restoreFromSheet()">⬇ Restore from Sheet</button>
     <button class="btn-compare" onclick="openCompare()">⚖ Compare Lodges</button>
-    <button class="btn-print-tile" onclick="printMode('tile')">🖨 Print Tiles</button>
-    <button class="btn-print-list" onclick="printMode('list')">☰ Print List</button>
+    <span class="backup-status idle" id="backupStatus">Ready — push to back up all lodge data, favourites &amp; notes</span>
 </div>
 
-
-<div class="print-header" id="printHeader">
-    <div style="border-bottom:2pt solid #2C5F2D;margin-bottom:10pt;padding-bottom:6pt;display:flex;justify-content:space-between;align-items:baseline;">
-        <span style="font-size:12pt;font-weight:700;color:#2C5F2D;">Ultimate Safari Lodge Dashboard</span>
-        <span id="printMeta" style="font-size:8pt;color:#999;"></span>
-    </div>
-</div>
 <div class="grid" id="lodgeGrid"></div>
-<div id="lodgeListWrap" style="display:none;max-width:1300px;margin:0 auto;overflow-x:auto;"><table class="lodge-list" id="lodgeListTable"><thead><tr><th></th><th>Reserve</th><th>Lodge</th><th>STO</th><th>Min Age</th><th>Accommodation</th><th>Capacity</th><th>Rating</th></tr></thead><tbody id="lodgeListBody"></tbody></table></div>
 
 <div class="modal-overlay hidden" id="ageModal">
     <div class="modal">
@@ -580,8 +387,6 @@
 </div>
 
 <script>
-let currentView = 'tile';
-
 // ═══════════════════════════════════════════════════
 // DATA — FACILITIES MAP
 // ═══════════════════════════════════════════════════
@@ -788,19 +593,6 @@ const lodgeFacilitiesMap = {
 // DATA — INCLUSIONS & EXCLUSIONS MAP
 // ═══════════════════════════════════════════════════
 const lodgeInclMap = {
-"Chitwa Chitwa Game Lodge": { include: "Accommodation | All meals | Teas & coffees | Bottled water, soft drinks, local beer and spirits | Chitwa House Wine Selection | Two open vehicle safaris a day | Daily walking safaris | Laundry service | Return transfers from the Chitwa airstrip to the lodge", exclude: "Purchases from the boutique | Spa Treatments | Telephone calls | Air and road transfers to/from the lodge | All premium label alcoholic beverages" },
-    "Lion Sands Chalkley Treehouse": { include: "Treehouse accommodation | Gourmet picnic dinner and inclusive drinks (all soft drinks, and selection of beers, spirits and house wines)", exclude: "All items and services not specifically mentioned in the rates above" },
-    "Lion Sands Kingston Treehouse": { include: "Treehouse accommodation | Gourmet picnic dinner and inclusive drinks (all soft drinks, and selection of beers, spirits and house wines)", exclude: "All items and services that are not specifically mentioned in our quotation above" },
-    "Little Madikwe Hills": { include: "Luxury accommodation | Two game drives per day | Three meals daily | Tea / Coffee | A wide selection of local beverages, house wines and spirits | High tea canapes & snacks | Selection of Fruit Juices | Laundry service | Road transfers from the Madikwe Airstrip to the lodge | Additional Suite Inclusions: | Private Game Drive Vehicle with Field Guide & Tracker | Villa Attendant and Personal Chef | All meals served in the Suite | Satellite TV | Children’s games & books", exclude: "All items and services not specifically mentioned in the rates above" },
-    "Makalali Private Game Lodge (Main Lodge)": { include: "Accommodation | Three Meals Daily | Morning & Evening Game Drives | TOMSA 1%", exclude: "All items and services that are not specifically mentioned in our quotation above" },
-    "Makalali Private Game River Lodge": { include: "Accommodation | Three Meals Daily | Morning & Evening Game Drives | Selected House Drinks | Hoedspruit Airport Transfers | TOMSA 1%", exclude: "All items and services that are not specifically mentioned in our quotation above" },
-    "Motswiri Private Safari": { include: "Luxury accommodation | Two game drives per day in our open game viewers with a highly qualified game ranger | All meals daily (excluding Kosher meals) | Welcome drinks | Specialised Coffees | A selection of local beers, ciders, house wines,soft drinks and waters | Complimentary road transfer from the Madikwe Western Airstrip to the Lodge", exclude: "Premium beverages other than stated above asincluded | Gate entry or fly-in fees rates are subject to change without prior notice and controlled by the North West Parks Board | Airstrip landing fees rates are subject to change without prior notice and controlled by the North West Parks Board | Conservation levies rates are subject to change without prior notice and controlled by the North West Parks Board | Any other items of personal nature" },
-    "Shishangeni Main Lodge": { include: "Accommodation | Three Meals Daily | Morning & Evening Game Drives | Wi-Fi at Shishangeni main lodge | Parking | VAT and TOURISM LEVY", exclude: "All items and services that are not specifically mentioned in our quotation above" },
-    "Simbambili Game Lodge": { include: "Accommodation | All meals and snacks | Local drinks (soft drinks, house wine, selected beer and spirits) | Minibar drinks | Morning & afternoon game drives with expert guides & trackers | Wi-Fi | Laundry", exclude: "Champagne, premium wines and spirits | Curio purchases & spa treatments | Gratuities" },
-    "Siviti Timbavati Plains - Homestead": { include: "Self-catered : | Accommodation | Two Game Drives A Day With A Private Field Guide And Tracker | Daily Housekeeping | Swimming Pool | Fully-catered : | Accommodation | Two Game Drives A Day With A Private Field Guide And Tracker | Daily Housekeeping | Swimming Pool | Three Meals Daily | Selected House Drinks (only until 31 Aug 2025) | Teas & Coffees", exclude: "All items and services not specifically mentioned in the rates above" },
-    "The Royal Madikwe": { include: "Accommodation | Three Meals Daily (Personal Chef & Butler, Traditional Boma Dinner & African Drumming, Picnic Lunch in the Wilderness) | Morning & Evening Game Drives | Teas & Coffees | Selected House Drinks | Transfers to/from Madikwe Western Airstrip | Personal Meet & Greet and Fast track through Immigration on arrival at ORT International Airport | Access to Fitness Centre | Children’s Program | Laundry Service | High Speed Wi-Fi", exclude: "All items and services not specifically mentioned in the rates above" },
-    "Tulela Mondzo": { include: "Accommodation | Three Meals Daily | Morning & Evening Game Drives | Bush/Nature Activities(subject to availability) | Firewood and ice are provided | Use of the gym | WiFi", exclude: "All items and services not specifically mentioned in the rates above" },
-    "Tulela Safari Lodge": { include: "Accommodation | Three Meals Daily | Morning & Evening Game Drives | Bush/Nature Activities(subject to availability) | Private chef and housekeeping staff | Use of the gym", exclude: "All items and services not specifically mentioned in the rates above" },
     "18 on the Hill": { include: "Accommodation | All Meal(breakfast, lunch and dinner) | 2 x daily safari game drives | house beverages | conservation levies | complimentary snacks", exclude: "All items and services not specifically mentioned in the rates above" },
     "AM Villa": { include: "Accommodation | Three Meals Daily (A La Carte) with Private Chef and Butler | Morning & Evening Game Drives  at AM Private Game Reserve | Bush/Nature Activities(subject to availability) | Selected House Drinks | Access to a Fully Equipped Gym | Wi-Fi in all guest rooms and public areas | Eastgate Airport (HDS) Transfers", exclude: "All items and services not specifically mentioned in the rates above" },
     "Abelana Safari Camp": { include: "Accommodation in Meru tents with en-suite | All teas/coffees | Light snack/rusks/muffins before morning activity | Afternoon/evening game drives with qualified guide | Brunch | High tea with savoury and sweet options | Dinner", exclude: "All drinks | Any gratuities | Transfers to and from the reserve" },
@@ -984,20 +776,20 @@ const lodgeInclMap = {
 // ═══════════════════════════════════════════════════
 const lodges = [
     // SABI SAND
-    { name:"Arathusa Safari Lodge", reserve:"Sabi Sand", type:"Suites", minAge:12, exclusive:false, price:"4★ / Mid-Range", specials:"", website:"https://www.arathusa.co.za/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Home/46965_15250/arathusa_safari_lodge", highlights:"Infinity pool overlooking waterhole; Authentic bushveld charm.", maxPax:16, maxChildren:0, sto:"20%" },
-    { name:"Cheetah Plains Game Lodge", reserve:"Sabi Sand", type:"Villas", minAge:0, exclusive:true, price:"5★+ / Ultra-Lux", specials:"Pay 3 Stay 4", website:"https://www.cheetahplains.com/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Launch/46965_21289/cheetah_plains/Landing", highlights:"3 Ultra-luxurious private eco-villas; Silent electric vehicles; Private chef & guide.", maxPax:6, maxChildren:0, sto:"25%" },
+    { name:"Arathusa Safari Lodge", reserve:"Sabi Sand", type:"Suites", minAge:12, exclusive:false, price:"4★ / Mid Range", specials:"", website:"https://www.arathusa.co.za/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Home/46965_15250/arathusa_safari_lodge", highlights:"Infinity pool overlooking waterhole; Authentic bushveld charm.", maxPax:16, maxChildren:0, sto:"20%" },
+    { name:"Cheetah Plains Game Lodge", reserve:"Sabi Sand", type:"Villas", minAge:0, exclusive:true, price:"5★+ / Ultra Lux", specials:"Pay 3 Stay 4", website:"https://www.cheetahplains.com/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Launch/46965_21289/cheetah_plains/Landing", highlights:"3 Ultra-luxurious private eco-villas; Silent electric vehicles; Private chef & guide.", maxPax:6, maxChildren:0, sto:"25%" },
     { name:"Chitwa Chitwa Game Lodge", reserve:"Sabi Sand", type:"Suites, Villas", minAge:0, exclusive:true, price:"5★ / Luxury", specials:"Stay 4 Pay 3", website:"https://www.chitwa.co.za/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Home/46965_5556/chitwa_chitwa_private_game_lodge", highlights:"Lakefront setting; Vibrant decor; Chitwa House is an exclusive private retreat.", maxPax:20, maxChildren:0, sto:"30%" },
     { name:"Dulini Leadwood Lodge", reserve:"Sabi Sand", type:"Suites", minAge:8, exclusive:false, price:"5★ / Luxury", specials:"Stay 6 Pay 5 | Honeymoon 50%", website:"https://www.dulini.com/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Launch/46965_12850/dulini_leadwood/Landing", highlights:"Intimate (only 4 suites); Confluence of Sand & Mabrak rivers.", maxPax:8, maxChildren:0, sto:"30%" },
     { name:"Dulini Moya Lodge", reserve:"Sabi Sand", type:"Suites", minAge:8, exclusive:false, price:"5★ / Luxury", specials:"Stay 6 Pay 5 | Honeymoon 50%", website:"https://www.dulini.com/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Home/46965_12849/dulini_moya", highlights:"Secluded ebony forest setting; Classic safari elegance.", maxPax:8, maxChildren:0, sto:"30%" },
     { name:"Dulini River Lodge", reserve:"Sabi Sand", type:"Suites", minAge:8, exclusive:false, price:"5★ / Luxury", specials:"Stay 6 Pay 5 | Honeymoon 50%", website:"https://www.dulini.com/river", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Home/46965_12851/dulini_river", highlights:"Overlooks Sand River; Spacious suites with heated plunge pools.", maxPax:8, maxChildren:0, sto:"30%" },
-    { name:"Elephant Plains Game Lodge", reserve:"Sabi Sand", type:"Rondavels, Suites", minAge:3, exclusive:false, price:"3★ / Low Cost", specials:"", website:"https://elephantplains.co.za/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Launch/46965_5566/elephant_plains_game_lodge/Landing", highlights:"Great value Big 5; Waterhole views; Children's program.", maxPax:20, maxChildren:0, sto:"25%" },
-    { name:"Idube Game Lodge", reserve:"Sabi Sand", type:"Chalets, Suites", minAge:8, exclusive:false, price:"4★ / Mid-Range", specials:"", website:"https://www.idube.com/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Launch/46965_5583/idube_game_reserve/Landing", highlights:"Unique sunken hide at Shadulu Dam; Makubela/Leadwood suites have private pools.", maxPax:16, maxChildren:0, sto:"25%" },
-    { name:"Inyati Game Lodge", reserve:"Sabi Sand", type:"Chalets", minAge:12, exclusive:false, price:"4★ / Mid-Range", specials:"", website:"https://inyati.co.za/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Home/46965_5584/inyati_game_lodge_sabi_sand_nature_reserve", highlights:"Sand River frontage; Walk-in wine cellar; Fishing available.", maxPax:16, maxChildren:0, sto:"20%" },
+    { name:"Elephant Plains Game Lodge", reserve:"Sabi Sand", type:"Rondavels, Suites", minAge:3, exclusive:false, price:"3-4★ / Low Cost", specials:"", website:"https://elephantplains.co.za/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Launch/46965_5566/elephant_plains_game_lodge/Landing", highlights:"Great value Big 5; Waterhole views; Children's program.", maxPax:20, maxChildren:0, sto:"25%" },
+    { name:"Idube Game Lodge", reserve:"Sabi Sand", type:"Chalets, Suites", minAge:8, exclusive:false, price:"4★ / Mid Range", specials:"", website:"https://www.idube.com/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Launch/46965_5583/idube_game_reserve/Landing", highlights:"Unique sunken hide at Shadulu Dam; Makubela/Leadwood suites have private pools.", maxPax:16, maxChildren:0, sto:"25%" },
+    { name:"Inyati Game Lodge", reserve:"Sabi Sand", type:"Chalets", minAge:12, exclusive:false, price:"4★ / Mid Range", specials:"", website:"https://inyati.co.za/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Home/46965_5584/inyati_game_lodge_sabi_sand_nature_reserve", highlights:"Sand River frontage; Walk-in wine cellar; Fishing available.", maxPax:16, maxChildren:0, sto:"20%" },
     { name:"Jaci's Sabi House", reserve:"Sabi Sand", type:"Villas", minAge:0, exclusive:true, price:"5★ / Luxury", specials:"", website:"https://www.jacissabihouse.co.za/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Launch/46965_88611/jacis_sabi_house/Landing", highlights:"Private 3-room bush home (max 6 guests); Private chef and vehicle.", maxPax:6, maxChildren:0, sto:"25%" },
     { name:"Kirkmans Kamp", reserve:"Sabi Sand", type:"Cottages", minAge:0, exclusive:false, price:"5★ / Luxury", specials:"Honeymoon 50%", website:"https://www.andbeyond.com/places-to-stay/africa/south-africa/sabi-sand-game-reserve/andbeyond-kirkmans-kamp/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Launch/46965_1102/andbeyond_kirkmans_kamp/Landing", highlights:"1920s historic colonial homestead; WILDchild program; Sand River views.", maxPax:20, maxChildren:0, sto:"15%" },
     { name:"Leopard Hills Private Game Lodge", reserve:"Sabi Sand", type:"Suites", minAge:10, exclusive:false, price:"5★ / Luxury", specials:"", website:"https://www.leopardhills.com/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Launch/46965_5597/leopard_hills_private_game_lodge/Landing", highlights:"Elevated rocky outcrop; Glass-fronted suites with panoramic views.", maxPax:16, maxChildren:0, sto:"30%" },
     { name:"Lion Sands Chalkley Treehouse", reserve:"Sabi Sand", type:"Treehouse", minAge:18, exclusive:false, price:"5★ / Experience", specials:"", website:"https://www.more.co.za/lionsands/", image:"", highlights:"Sleep-out experience under the stars.", maxPax:2, maxChildren:0, sto:"20%" },
-    { name:"Lion Sands Ivory Lodge", reserve:"Sabi Sand", type:"Suites, Villas", minAge:10, exclusive:true, price:"5★+ / Ultra-Lux", specials:"", website:"https://www.more.co.za/lionsands/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Launch/46965_14893/lion_sands_ivory_lodge/Landing", highlights:"Unrivaled luxury on Sabie River; Fish Eagle Villa accommodates families.", maxPax:18, maxChildren:0, sto:"20%" },
+    { name:"Lion Sands Ivory Lodge", reserve:"Sabi Sand", type:"Suites, Villas", minAge:10, exclusive:true, price:"5★+ / Ultra Lux", specials:"", website:"https://www.more.co.za/lionsands/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Launch/46965_14893/lion_sands_ivory_lodge/Landing", highlights:"Unrivaled luxury on Sabie River; Fish Eagle Villa accommodates families.", maxPax:18, maxChildren:0, sto:"20%" },
     { name:"Lion Sands Kingston Treehouse", reserve:"Sabi Sand", type:"Treehouse", minAge:10, exclusive:false, price:"5★ / Experience", specials:"", website:"https://www.more.co.za/lionsands/", image:"", highlights:"Luxury treehouse sleep-out.", maxPax:4, maxChildren:0, sto:"20%" },
     { name:"Lion Sands River Lodge", reserve:"Sabi Sand", type:"Suites, Rooms", minAge:10, exclusive:false, price:"5★ / Luxury", specials:"", website:"https://www.more.co.za/lionsands/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Launch/46965_14892/lion_sands_river_lodge/Landing", highlights:"Vibrant atmosphere; Sabie River views; Mack & Madi Kids' Adventure.", maxPax:22, maxChildren:0, sto:"20%" },
     { name:"Londolozi Founders Camp", reserve:"Sabi Sand", type:"Chalets", minAge:6, exclusive:false, price:"5★ / Luxury", specials:"", website:"https://www.londolozi.com/", image:"", highlights:"Family-friendly; River views; Cubs Den program.", maxPax:20, maxChildren:0, sto:"15%" },
@@ -1005,25 +797,25 @@ const lodges = [
     { name:"Londolozi Private Granite Suites", reserve:"Sabi Sand", type:"Suites", minAge:16, exclusive:true, price:"5★ / Luxury", specials:"", website:"https://www.londolozi.com/", image:"", highlights:"Only 3 suites; Outdoor river baths; Private heated plunge pools.", maxPax:6, maxChildren:0, sto:"15%" },
     { name:"Londolozi Tree Camp", reserve:"Sabi Sand", type:"Suites", minAge:16, exclusive:false, price:"5★ / Luxury", specials:"", website:"https://www.londolozi.com/", image:"", highlights:"Elegant suites nestled in the treetops; Highly exclusive.", maxPax:10, maxChildren:0, sto:"15%" },
     { name:"Londolozi Varty Camp", reserve:"Sabi Sand", type:"Chalets", minAge:6, exclusive:false, price:"5★ / Luxury", specials:"", website:"https://www.londolozi.com/", image:"", highlights:"Original 1926 camp; Heart of Londolozi; Family-friendly.", maxPax:20, maxChildren:0, sto:"15%" },
-    { name:"Nkorho Bush Lodge", reserve:"Sabi Sand", type:"Chalets", minAge:0, exclusive:false, price:"4★ / Mid-Range", specials:"", website:"https://www.nkorho.com/", image:"", highlights:"Open plain views; Infinity pool; Famous for leopard sightings.", maxPax:18, maxChildren:0, sto:"30%" },
-    { name:"Notten's Bush Camp", reserve:"Sabi Sand", type:"Suites", minAge:6, exclusive:false, price:"4★ / Mid-Range", specials:"", website:"https://nottens.com/", image:"", highlights:"Authentic candlelit/lantern-lit camp (no electricity in rooms).", maxPax:16, maxChildren:0, sto:"20%" },
+    { name:"Nkorho Bush Lodge", reserve:"Sabi Sand", type:"Chalets", minAge:0, exclusive:false, price:"4★ / Mid Range", specials:"", website:"https://www.nkorho.com/", image:"", highlights:"Open plain views; Infinity pool; Famous for leopard sightings.", maxPax:18, maxChildren:0, sto:"30%" },
+    { name:"Notten's Bush Camp", reserve:"Sabi Sand", type:"Suites", minAge:6, exclusive:false, price:"4★ / Mid Range", specials:"", website:"https://nottens.com/", image:"", highlights:"Authentic candlelit/lantern-lit camp (no electricity in rooms).", maxPax:16, maxChildren:0, sto:"20%" },
     { name:"Sabi Sabi Bush Lodge", reserve:"Sabi Sand", type:"Suites, Villas", minAge:0, exclusive:true, price:"5★ / Luxury", specials:"Stay 4 Pay 3", website:"https://www.sabisabi.com/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Home/46965_14845/sabi_sabi_bush_lodge", highlights:"Highly family-friendly; EleFun children's centre; Mandleve & Luxury Villas.", maxPax:24, maxChildren:0, sto:"30%" },
-    { name:"Sabi Sabi Earth Lodge", reserve:"Sabi Sand", type:"Suites, Villas", minAge:13, exclusive:true, price:"5★ / Ultra-Lux", specials:"Stay 4 Pay 3", website:"https://www.sabisabi.com/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Launch/46965_14844/sabi_sabi_earth_lodge/Landing", highlights:"Avant-garde architecture sculpted into the earth; Amber Villa is ultra-exclusive.", maxPax:16, maxChildren:0, sto:"30%" },
+    { name:"Sabi Sabi Earth Lodge", reserve:"Sabi Sand", type:"Suites, Villas", minAge:13, exclusive:true, price:"5★ / Ultra Lux", specials:"Stay 4 Pay 3", website:"https://www.sabisabi.com/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Launch/46965_14844/sabi_sabi_earth_lodge/Landing", highlights:"Avant-garde architecture sculpted into the earth; Amber Villa is ultra-exclusive.", maxPax:16, maxChildren:0, sto:"30%" },
     { name:"Sabi Sabi Little Bush Camp", reserve:"Sabi Sand", type:"Suites", minAge:13, exclusive:false, price:"5★ / Luxury", specials:"", website:"https://www.sabisabi.com/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Launch/46965_14842/sabi_sabi_little_bush_camp/Landing", highlights:"Smallest Sabi lodge (6 suites); Intimate & secluded on Msuthlu Riverbed.", maxPax:12, maxChildren:0, sto:"30%" },
     { name:"Sabi Sabi Selati Camp", reserve:"Sabi Sand", type:"Suites", minAge:13, exclusive:false, price:"5★ / Luxury", specials:"Stay 4 Pay 3", website:"https://www.sabisabi.com/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Launch/46965_14841/sabi_sabi_selati_camp/Landing", highlights:"Vintage 19th-century railway theme; Lit by oil lamps; Deeply romantic.", maxPax:14, maxChildren:0, sto:"30%" },
     { name:"Savanna Private Game Reserve", reserve:"Sabi Sand", type:"Tented, Villas", minAge:8, exclusive:true, price:"5★ / Luxury", specials:"Honeymoon 50%", website:"https://savannalodge.com/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Launch/46965_14840/savanna_private_game_reserve/Landing", highlights:"Unique 'Out of Africa' tented roofs; Savanna Suite is an exclusive villa.", maxPax:16, maxChildren:0, sto:"30%" },
     { name:"Silvan Safari", reserve:"Sabi Sand", type:"Suites", minAge:12, exclusive:false, price:"5★ / Luxury", specials:"", website:"https://www.silvansafari.com/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Launch/46965_189598/silvan_safari/Landing", highlights:"Art-inspired pods; Leadwood Family Suite; Ansellia Orchid Spa.", maxPax:14, maxChildren:0, sto:"20%" },
     { name:"Simbambili Game Lodge", reserve:"Sabi Sand", type:"Luxury Suites", minAge:12, exclusive:true, price:"5★ / Ultra-Lux", specials:"Pay 3 Stay 4 | Honeymoon 50%", website:"https://www.thornybush.com/lodge/simbambili-game-lodge/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Launch/46965_15361/simbambili_game_lodge/Landing", highlights:"Leopard Capital; Unique Moroccan-inspired décor; Newly renovated spa and gym.", maxPax:16, maxChildren:0, sto:"20%" },
-    { name:"Singita Boulders Lodge", reserve:"Sabi Sand", type:"Suites", minAge:10, exclusive:false, price:"5★ / Ultra-Lux", specials:"", website:"https://singita.com/", image:"", highlights:"Floor-to-ceiling glass; Sand River frontage; Exceptional wine cellar.", maxPax:18, maxChildren:0, sto:"10%" },
-    { name:"Singita Castleton", reserve:"Sabi Sand", type:"Villas", minAge:0, exclusive:true, price:"5★ / Ultra-Lux", specials:"", website:"https://singita.com/", image:"", highlights:"Private farmhouse villa for up to 12 guests; Private guide, chef, pool.", maxPax:12, maxChildren:0, sto:"10%" },
-    { name:"Singita Ebony Lodge", reserve:"Sabi Sand", type:"Suites", minAge:0, exclusive:false, price:"5★ / Ultra-Lux", specials:"", website:"https://singita.com/", image:"", highlights:"Classic luxury; Expansive decks blending into the wilderness.", maxPax:18, maxChildren:0, sto:"10%" },
+    { name:"Singita Boulders Lodge", reserve:"Sabi Sand", type:"Suites", minAge:10, exclusive:false, price:"5★ / Ultra Lux", specials:"", website:"https://singita.com/", image:"", highlights:"Floor-to-ceiling glass; Sand River frontage; Exceptional wine cellar.", maxPax:18, maxChildren:0, sto:"10%" },
+    { name:"Singita Castleton", reserve:"Sabi Sand", type:"Villas", minAge:0, exclusive:true, price:"5★ / Ultra Lux", specials:"", website:"https://singita.com/", image:"", highlights:"Private farmhouse villa for up to 12 guests; Private guide, chef, pool.", maxPax:12, maxChildren:0, sto:"10%" },
+    { name:"Singita Ebony Lodge", reserve:"Sabi Sand", type:"Suites", minAge:0, exclusive:false, price:"5★ / Ultra Lux", specials:"", website:"https://singita.com/", image:"", highlights:"Classic luxury; Expansive decks blending into the wilderness.", maxPax:18, maxChildren:0, sto:"10%" },
     { name:"Tengile River Lodge", reserve:"Sabi Sand", type:"Suites", minAge:12, exclusive:false, price:"5★ / Luxury", specials:"Honeymoon 50%", website:"https://www.andbeyond.com/places-to-stay/africa/south-africa/sabi-sand-game-reserve/andbeyond-tengile-river-lodge/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Launch/46965_127787/andbeyond_tengile_river_lodge/Landing", highlights:"Sustainable eco-design floating above riverbed; Massive 200sqm suites.", maxPax:16, maxChildren:0, sto:"15%" },
-    { name:"Umkumbe Bush Lodge", reserve:"Sabi Sand", type:"Tented", minAge:5, exclusive:false, price:"3★ / Low Cost", specials:"", website:"https://www.umkumbebushlodge.com/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Launch/46965_262416/umkumbe_bush_lodge/Landing", highlights:"Authentic glamping feel; Raised wooden decks; Inter-leading tents.", maxPax:12, maxChildren:0, sto:"25%" },
+    { name:"Umkumbe Bush Lodge", reserve:"Sabi Sand", type:"Tented", minAge:5, exclusive:false, price:"3-4★ / Low Cost", specials:"", website:"https://www.umkumbebushlodge.com/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Launch/46965_262416/umkumbe_bush_lodge/Landing", highlights:"Authentic glamping feel; Raised wooden decks; Inter-leading tents.", maxPax:12, maxChildren:0, sto:"25%" },
     { name:"Umkumbe Safari Lodge Riverside", reserve:"Sabi Sand", type:"Rooms, Suites", minAge:5, exclusive:false, price:"3★ / Low Cost", specials:"", website:"https://www.umkumbe.co.za/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Launch/46965_24610/umkumbe_safari_lodge_riverside/Landing", highlights:"Owner-managed rustic camp; Sand river views; Exceptional value.", maxPax:14, maxChildren:0, sto:"25%" },
     // KRUGER
     { name:"Lukimbi Safari Lodge", reserve:"Kruger National Park", type:"Classic & Premier Suites", minAge:2, exclusive:false, price:"5★ / Luxury", specials:"Idube & Lukimbi 4-Night Combo", website:"https://www.lukimbi.com/", image:"https://wetu.com/iBrochure/en/Map/146/lukimbi_safari_lodge/Location", highlights:"Set on an exclusive 15,000-hectare private concession; Exceptional facilities for children.", maxPax:30, maxChildren:0, sto:"25%" },
-    { name:"Lion Sands Narina Lodge", reserve:"Kruger National Park", type:"Suites", minAge:16, exclusive:false, price:"5★ / Ultra-Lux", specials:"", website:"https://www.more.co.za/lionsands/", image:"", highlights:"Perched on stilts among 100-year-old trees; Overlooks Sabie River; Highly private.", maxPax:14, maxChildren:0, sto:"20%" },
-    { name:"Lion Sands Tinga Lodge", reserve:"Kruger National Park", type:"Suites", minAge:6, exclusive:false, price:"5★ / Ultra-Lux", specials:"", website:"https://www.more.co.za/lionsands/", image:"", highlights:"Spacious classic safari suites; Sabie River frontage; Mack & Madi Kids' Club.", maxPax:18, maxChildren:0, sto:"20%" },
+    { name:"Lion Sands Narina Lodge", reserve:"Kruger National Park", type:"Suites", minAge:16, exclusive:false, price:"5★ / Ultra Lux", specials:"", website:"https://www.more.co.za/lionsands/", image:"", highlights:"Perched on stilts among 100-year-old trees; Overlooks Sabie River; Highly private.", maxPax:14, maxChildren:0, sto:"20%" },
+    { name:"Lion Sands Tinga Lodge", reserve:"Kruger National Park", type:"Suites", minAge:6, exclusive:false, price:"5★ / Ultra Lux", specials:"", website:"https://www.more.co.za/lionsands/", image:"", highlights:"Spacious classic safari suites; Sabie River frontage; Mack & Madi Kids' Club.", maxPax:18, maxChildren:0, sto:"20%" },
     { name:"Lion Sands Tinyeleti Treehouse", reserve:"Kruger National Park", type:"Treehouse", minAge:6, exclusive:false, price:"5★ / Experience", specials:"", website:"https://www.more.co.za/lionsands/", image:"", highlights:"50m2 open-air deck overlooking the Sabie River; Accommodates up to 4 people.", maxPax:4, maxChildren:0, sto:"20%" },
     { name:"Jock Safari Lodge", reserve:"Kruger National Park", type:"Suites", minAge:6, exclusive:false, price:"5★ / Luxury", specials:"", website:"https://www.jocksafarilodge.com/", image:"", highlights:"First private concession in Kruger; Steeped in history; Set at confluence of Mitomeni and Biyamiti rivers.", maxPax:16, maxChildren:0, sto:"20%" },
     { name:"Imbali Safari Lodge", reserve:"Kruger National Park", type:"Suites", minAge:8, exclusive:false, price:"5★ / Luxury", specials:"", website:"https://imbali.com/", image:"", highlights:"Classic 1900s safari elegance; Private plunge pools; Situated on the ancient Nwaswitsontso riverbed.", maxPax:14, maxChildren:0, sto:"30%" },
@@ -1071,12 +863,12 @@ const lodges = [
     { name:"Thornybush Saseka Tented Camp", reserve:"Thornybush", type:"Tented", minAge:0, exclusive:false, price:"5★ / Ultra-Lux", specials:"Honeymoon 15%", website:"https://www.thornybush.com/", image:"", highlights:"Ultra-modern tented design; Private plunge pools; Overlooks Monwana River.", maxPax:16, maxChildren:0, sto:"20%" },
     { name:"Waterbuck Lodge", reserve:"Thornybush", type:"Suites", minAge:0, exclusive:false, price:"4★ / Mid-Range", specials:"", website:"https://www.thornybush.com/lodge/waterbuck-lodge/", image:"", highlights:"Set on a waterhole; Great for families; Classic bush feel.", maxPax:14, maxChildren:0, sto:"25%" },
     // SIVITI (Thornybush / Timbavati)
-    { name:"Siviti Timbavati Plains", reserve:"Thornybush", type:"Suites & Villa", minAge:14, exclusive:false, price:"5★ / Ultra-Lux", specials:"", website:"https://siviti.com/", image:"", highlights:"Intimate suites & private villa on the Timbavati Plains; Private villa min age 6+; In-room spa & private chef for villa.", maxPax:4, maxChildren:0, sto:"20%" },
+    { name:"Siviti Timbavati Plains", reserve:"Thornybush", type:"Suites & Villa", minAge:14, exclusive:false, price:"5★ / Ultra Lux", specials:"", website:"https://siviti.com/", image:"", highlights:"Intimate suites & private villa on the Timbavati Plains; Private villa min age 6+; In-room spa & private chef for villa.", maxPax:4, maxChildren:0, sto:"20%" },
     { name:"Siviti Timbavati Plains - Homestead", reserve:"Thornybush", type:"Houses / Villas", minAge:0, exclusive:true, price:"5★ / Luxury", specials:"", website:"https://siviti.com/", image:"", highlights:"Exclusive-use 4-bedroom homestead; All ages welcome; Private vehicle, chef & pool; Ideal for families.", maxPax:8, maxChildren:0, sto:"20%" },
     // KARONGWE
     { name:"Karongwe Chisomo Safari Lodge", reserve:"Karongwe", type:"Tented (Safari Tents)", minAge:0, exclusive:false, price:"3★ / Mid-Range", specials:"", website:"https://www.karongweportfolio.com/", image:"", highlights:"All-ages safari tents; Pool; Boma; Bush breakfast & dinner; Intimate camp atmosphere.", maxPax:2, maxChildren:0, sto:"BAR" },
     { name:"Karongwe River Lodge", reserve:"Karongwe", type:"Suites (Thatched)", minAge:0, exclusive:false, price:"4★ / Good Value", specials:"", website:"https://www.karongweportfolio.com/", image:"", highlights:"Luxury & family suites; Pool; Boma; Bush breakfast & dinner; Family-friendly Big 5 reserve.", maxPax:4, maxChildren:0, sto:"BAR" },
-    { name:"Karongwe Kuname Lodge", reserve:"Karongwe", type:"Suites & Houses", minAge:12, exclusive:false, price:"5★ / Luxury", specials:"", website:"https://www.karongweportfolio.com/", image:"", highlights:"Main lodge suites & exclusive-use manor; Manor is all-ages; Pool; Boma; Exclusive use available.", maxPax:6, maxChildren:0, sto:"BAR" },
+    { name:"Karongwe Kuname Lodge", reserve:"Karongwe", type:"Suites & Houses", minAge:12, exclusive:false, price:"5★ / Fantastic Lux", specials:"", website:"https://www.karongweportfolio.com/", image:"", highlights:"Main lodge suites & exclusive-use manor; Manor is all-ages; Pool; Boma; Exclusive use available.", maxPax:6, maxChildren:0, sto:"BAR" },
     { name:"Karongwe Shiduli Private Game Lodge", reserve:"Karongwe", type:"Suites", minAge:0, exclusive:false, price:"3★ / Mid-Range", specials:"", website:"https://www.karongweportfolio.com/", image:"", highlights:"Luxury & Royal suites; Conference facilities; Pool; Boma; Bush breakfast & dinner; All ages welcome.", maxPax:2, maxChildren:0, sto:"BAR" },
     { name:"Becks Safari Lodge", reserve:"Karongwe", type:"Suites (Deluxe)", minAge:6, exclusive:false, price:"5★ / Luxury", specials:"", website:"https://www.karongweportfolio.com/", image:"", highlights:"Deluxe suites; Pool; Boma; Bush breakfast & dinner; Spa & WiFi; Upmarket boutique lodge.", maxPax:2, maxChildren:0, sto:"BAR" },
     { name:"Noka House", reserve:"Karongwe", type:"Houses / Villas", minAge:0, exclusive:true, price:"5★ / Luxury", specials:"", website:"https://www.karongweportfolio.com/", image:"", highlights:"Exclusive-use 6-guest villa; Private chef; Pool; Boma; Bush breakfast & dinner; All ages welcome.", maxPax:6, maxChildren:0, sto:"BAR" },
@@ -1151,30 +943,30 @@ const lodges = [
     // MADIKWE
     { name:"Buffalo Ridge Safari Lodge", reserve:"Madikwe", type:"Suites", minAge:3, exclusive:false, price:"4★ / Good Value", specials:"", website:"https://www.buffaloridgesafari.com/", image:"", highlights:"First wholly-owned, community-based lodge in SA; Open vehicle safaris & stargazing.", maxPax:16, maxChildren:0, sto:"T.B.A." },
     { name:"Etali Safari Lodge", reserve:"Madikwe", type:"Suites", minAge:0, exclusive:false, price:"5★ / Good Value", specials:"", website:"https://etalisafari.co.za/", image:"", highlights:"Children's 'Bumble Drive' & kids menu; Wheelchair accessible.", maxPax:20, maxChildren:0, sto:"T.B.A." },
-    { name:"Jamala Madikwe Royal Safari Lodge", reserve:"Madikwe", type:"Villas", minAge:16, exclusive:false, price:"5★ / Ultra-Lux", specials:"Fly-in with Marataba", website:"https://jamalamadikwe.com/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Launch/46965_18464/jamala_madikwe_royal_safari_lodge/Landing", highlights:"Max 10 guests for absolute privacy; Overlooks a highly active waterhole.", maxPax:10, maxChildren:0, sto:"T.B.A." },
-    { name:"Madikwe Hills Private Game Lodge", reserve:"Madikwe", type:"Suites", minAge:10, exclusive:true, price:"5★ / Ultra-Lux", specials:"Pay 3 Stay 4", website:"https://madikwehills.com/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Launch/46965_14886/madikwe_hills_private_game_lodge/Landing", highlights:"Ingeniously set amongst boulders and age-old Tamboti trees.", maxPax:10, maxChildren:0, sto:"30" },
-    { name:"Madikwe River Lodge", reserve:"Madikwe", type:"Chalets", minAge:0, exclusive:false, price:"4★ / Luxury", specials:"", website:"https://aha.co.za/madikwe-river-lodge/", image:"", highlights:"Located right on the Groot Marico River; Dedicated kiddies game drives.", maxPax:20, maxChildren:0, sto:"30" },
-    { name:"Madikwe Safari Dithaba Lodge", reserve:"Madikwe", type:"Suites", minAge:16, exclusive:true, price:"5★ / Ultra-Lux", specials:"Stay 4 Pay 3", website:"https://madikwesafarilodge.co.za/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Home/46965_14885/madikwe_safari_lodge", highlights:"Higher elevation with mountain views; Ideal for private groups.", maxPax:10, maxChildren:0, sto:"25" },
-    { name:"Madikwe Safari Kopano Lodge", reserve:"Madikwe", type:"Suites, Villas", minAge:16, exclusive:true, price:"5★ / Luxury", specials:"Stay 4 Pay 3", website:"https://madikwesafarilodge.co.za/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Home/46965_14885/madikwe_safari_lodge", highlights:"Intimate camp; Highly exclusive and quiet.", maxPax:8, maxChildren:0, sto:"25" },
-    { name:"Madikwe Safari Lelapa Lodge", reserve:"Madikwe", type:"Suites", minAge:0, exclusive:false, price:"5★ / Luxury", specials:"Stay 4 Pay 3", website:"https://madikwesafarilodge.co.za/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Home/46965_14885/madikwe_safari_lodge", highlights:"Highly family-friendly; Features the Mack & Madi Kids' Adventure Safari Club.", maxPax:20, maxChildren:0, sto:"25" },
-    { name:"Rhulani Safari Lodge", reserve:"Madikwe", type:"Chalets", minAge:0, exclusive:false, price:"4★ / Luxury", specials:"Stay 6 Pay 5 | Pay 3 Stay 4", website:"https://www.rhulani.com/", image:"", highlights:"Private plunge pools; Unique excursions to Botswana available.", maxPax:18, maxChildren:0, sto:"30%" },
-    { name:"The Royal Madikwe", reserve:"Madikwe", type:"Suites, Villas", minAge:0, exclusive:false, price:"5★ / Ultra-Lux", specials:"", website:"https://www.royalmadikwe.com/", image:"", highlights:"Award-winning luxury; Heavily family-focused; Overlooks a very active waterhole.", maxPax:22, maxChildren:0, sto:"25%" },
+    { name:"Jamala Madikwe Royal Safari Lodge", reserve:"Madikwe", type:"Villas", minAge:16, exclusive:false, price:"5★ / Ultra Lux", specials:"Fly-in with Marataba", website:"https://jamalamadikwe.com/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Launch/46965_18464/jamala_madikwe_royal_safari_lodge/Landing", highlights:"Max 10 guests for absolute privacy; Overlooks a highly active waterhole.", maxPax:10, maxChildren:0, sto:"T.B.A." },
+    { name:"Madikwe Hills Private Game Lodge", reserve:"Madikwe", type:"Suites", minAge:10, exclusive:true, price:"5★ / Ultra Lux", specials:"Pay 3 Stay 4", website:"https://madikwehills.com/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Launch/46965_14886/madikwe_hills_private_game_lodge/Landing", highlights:"Ingeniously set amongst boulders and age-old Tamboti trees.", maxPax:10, maxChildren:0, sto:"30" },
+    { name:"Madikwe River Lodge", reserve:"Madikwe", type:"Chalets", minAge:0, exclusive:false, price:"4★ / Fantastic Lux", specials:"", website:"https://aha.co.za/madikwe-river-lodge/", image:"", highlights:"Located right on the Groot Marico River; Dedicated kiddies game drives.", maxPax:20, maxChildren:0, sto:"30" },
+    { name:"Madikwe Safari Dithaba Lodge", reserve:"Madikwe", type:"Suites", minAge:16, exclusive:true, price:"5★ / Ultra Lux", specials:"Stay 4 Pay 3", website:"https://madikwesafarilodge.co.za/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Home/46965_14885/madikwe_safari_lodge", highlights:"Higher elevation with mountain views; Ideal for private groups.", maxPax:10, maxChildren:0, sto:"25" },
+    { name:"Madikwe Safari Kopano Lodge", reserve:"Madikwe", type:"Suites, Villas", minAge:16, exclusive:true, price:"5★ / Fantastic Lux", specials:"Stay 4 Pay 3", website:"https://madikwesafarilodge.co.za/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Home/46965_14885/madikwe_safari_lodge", highlights:"Intimate camp; Highly exclusive and quiet.", maxPax:8, maxChildren:0, sto:"25" },
+    { name:"Madikwe Safari Lelapa Lodge", reserve:"Madikwe", type:"Suites", minAge:0, exclusive:false, price:"5★ / Fantastic Lux", specials:"Stay 4 Pay 3", website:"https://madikwesafarilodge.co.za/", image:"https://ibrochure.africansafarigroup.com/iBrochure/en/Home/46965_14885/madikwe_safari_lodge", highlights:"Highly family-friendly; Features the Mack & Madi Kids' Adventure Safari Club.", maxPax:20, maxChildren:0, sto:"25" },
+    { name:"Rhulani Safari Lodge", reserve:"Madikwe", type:"Chalets", minAge:0, exclusive:false, price:"4★ / Fantastic Lux", specials:"Stay 6 Pay 5 | Pay 3 Stay 4", website:"https://www.rhulani.com/", image:"", highlights:"Private plunge pools; Unique excursions to Botswana available.", maxPax:18, maxChildren:0, sto:"30%" },
+    { name:"The Royal Madikwe", reserve:"Madikwe", type:"Suites, Villas", minAge:0, exclusive:false, price:"5★ / Ultra Lux", specials:"", website:"https://www.royalmadikwe.com/", image:"", highlights:"Award-winning luxury; Heavily family-focused; Overlooks a very active waterhole.", maxPax:22, maxChildren:0, sto:"25%" },
     { name:"Tau Game Lodge", reserve:"Madikwe", type:"Chalets", minAge:0, exclusive:false, price:"4★ / Mid-Range", specials:"", website:"https://taugamelodge.co.za/", image:"", highlights:"Large 30-room lodge; Great for conferences and families; Tau Cubz Club.", maxPax:60, maxChildren:0, sto:"20%" },
     { name:"Impodimo Game Lodge", reserve:"Madikwe", type:"Suites", minAge:0, exclusive:false, price:"5★ / Luxury", specials:"", website:"https://impodimo.com/", image:"", highlights:"Carved into the hillside; Glass-fronted suites; Famous for excellent trackers.", maxPax:14, maxChildren:0, sto:"30%" },
-    { name:"Mateya Safari Lodge", reserve:"Madikwe", type:"Suites", minAge:9, exclusive:false, price:"5★ / Ultra-Lux", specials:"", website:"https://mateyasafari.com/", image:"", highlights:"One of the most exclusive lodges in Madikwe; Incredible private African art collection; Only 5 suites.", maxPax:10, maxChildren:0, sto:"25%" },
-    { name:"Morukuru River House", reserve:"Madikwe", type:"Villas", minAge:0, exclusive:true, price:"5★ / Ultra-Lux", specials:"", website:"https://morukuru.com/", image:"", highlights:"3-bedroom exclusive-use home; Private chef, guide, and host; Set on the Marico River.", maxPax:6, maxChildren:0, sto:"25%" },
+    { name:"Mateya Safari Lodge", reserve:"Madikwe", type:"Suites", minAge:9, exclusive:false, price:"5★ / Ultra Lux", specials:"", website:"https://mateyasafari.com/", image:"", highlights:"One of the most exclusive lodges in Madikwe; Incredible private African art collection; Only 5 suites.", maxPax:10, maxChildren:0, sto:"25%" },
+    { name:"Morukuru River House", reserve:"Madikwe", type:"Villas", minAge:0, exclusive:true, price:"5★ / Ultra Lux", specials:"", website:"https://morukuru.com/", image:"", highlights:"3-bedroom exclusive-use home; Private chef, guide, and host; Set on the Marico River.", maxPax:6, maxChildren:0, sto:"25%" },
     { name:"The Last Word Madikwe", reserve:"Madikwe", type:"Suites", minAge:0, exclusive:false, price:"5★ / Luxury", specials:"", website:"https://www.thelastword.co.za/madikwe", image:"", highlights:"Boutique luxury; Intimate atmosphere; Excellent underground hide.", maxPax:14, maxChildren:0, sto:"25%" },
     { name:"Tuningi Safari Lodge", reserve:"Madikwe", type:"Suites", minAge:6, exclusive:false, price:"5★ / Luxury", specials:"", website:"https://www.tuningi.com/", image:"", highlights:"Afro-chic design; Wraparound viewing decks; Excellent family offerings.", maxPax:16, maxChildren:0, sto:"30%" },
     { name:"Jaci's Tree Lodge", reserve:"Madikwe", type:"Treehouse", minAge:13, exclusive:false, price:"5★ / Luxury", specials:"", website:"https://www.jacislodges.co.za/", image:"", highlights:"Custom-built wooden treehouses connected by suspended walkways; Unique forest vibe.", maxPax:14, maxChildren:0, sto:"25%" },
     { name:"Jaci's Safari Lodge", reserve:"Madikwe", type:"Tented, Suites", minAge:0, exclusive:false, price:"5★ / Luxury", specials:"", website:"https://www.jacislodges.co.za/", image:"", highlights:"Vibrant colors; Canvas and thatch design; Terrapin Hide located in the middle of a waterhole.", maxPax:20, maxChildren:0, sto:"25%" },
     { name:"Jaci's Madikwe House", reserve:"Madikwe", type:"Villas", minAge:0, exclusive:true, price:"5★ / Luxury", specials:"", website:"https://www.jacislodges.co.za/", image:"", highlights:"Private exclusive-use home; Perfect for multi-generational families.", maxPax:10, maxChildren:0, sto:"25%" },
-    { name:"Morukuru Owners House", reserve:"Madikwe", type:"Villas", minAge:0, exclusive:true, price:"5★ / Ultra-Lux", specials:"", website:"https://morukuru.com/", image:"", highlights:"2-bedroom exclusive-use home; Ultimate privacy; Built under a canopy of ancient Morukuru trees.", maxPax:4, maxChildren:0, sto:"20%" },
-    { name:"Morukuru Farm House", reserve:"Madikwe", type:"Villas", minAge:0, exclusive:true, price:"5★ / Ultra-Lux", specials:"", website:"https://morukuru.com/", image:"", highlights:"5-bedroom exclusive-use home; Massive fenced-in green yard; Perfect for large families with young kids.", maxPax:10, maxChildren:0, sto:"20%" },
+    { name:"Morukuru Owners House", reserve:"Madikwe", type:"Villas", minAge:0, exclusive:true, price:"5★ / Ultra Lux", specials:"", website:"https://morukuru.com/", image:"", highlights:"2-bedroom exclusive-use home; Ultimate privacy; Built under a canopy of ancient Morukuru trees.", maxPax:4, maxChildren:0, sto:"20%" },
+    { name:"Morukuru Farm House", reserve:"Madikwe", type:"Villas", minAge:0, exclusive:true, price:"5★ / Ultra Lux", specials:"", website:"https://morukuru.com/", image:"", highlights:"5-bedroom exclusive-use home; Massive fenced-in green yard; Perfect for large families with young kids.", maxPax:10, maxChildren:0, sto:"20%" },
     { name:"Mosetlha Bush Camp", reserve:"Madikwe", type:"Cabin", minAge:6, exclusive:false, price:"3★ / Low Cost", specials:"", website:"https://thebushcamp.com/", image:"", highlights:"Authentic, unfenced eco-camp; Raised wooden cabins; No electricity or running water in cabins.", maxPax:14, maxChildren:0, sto:"10%" },
     { name:"Makanyane Safari Lodge", reserve:"Madikwe", type:"Suites", minAge:12, exclusive:false, price:"5★ / Luxury", specials:"", website:"https://www.makanyane.com/", image:"", highlights:"Set in a private 1,800-hectare concession within Madikwe; Glass-walled bedrooms; Sleep-out hide available.", maxPax:14, maxChildren:0, sto:"25%" },
-    { name:"Molori Safari Lodge", reserve:"Madikwe", type:"Suites, Villas", minAge:0, exclusive:false, price:"5★ / Ultra-Lux", specials:"", website:"https://www.molorisafari.com/", image:"", highlights:"Celebrity-level luxury; Bold, eclectic design; State-of-the-art observatory for stargazing.", maxPax:14, maxChildren:0, sto:"25%" },
+    { name:"Molori Safari Lodge", reserve:"Madikwe", type:"Suites, Villas", minAge:0, exclusive:false, price:"5★ / Ultra Lux", specials:"", website:"https://www.molorisafari.com/", image:"", highlights:"Celebrity-level luxury; Bold, eclectic design; State-of-the-art observatory for stargazing.", maxPax:14, maxChildren:0, sto:"25%" },
     { name:"Motswiri Private Safari", reserve:"Madikwe", type:"Suites, Villas", minAge:0, exclusive:false, price:"5★ / Luxury", specials:"", website:"https://www.motswiri.com/", image:"", highlights:"Can be booked exclusively or per room; Intimate (maximum 10 guests); Overlooks a private waterhole.", maxPax:10, maxChildren:0, sto:"30%" },
-    { name:"Little Madikwe Hills", reserve:"Madikwe", type:"Villas", minAge:0, exclusive:true, price:"5★ / Ultra-Lux", specials:"", website:"https://madikwehills.com/", image:"", highlights:"Exclusive-use villa attached to Madikwe Hills; Private game drive vehicle, chef, and butler.", maxPax:6, maxChildren:0, sto:"30%" },
+    { name:"Little Madikwe Hills", reserve:"Madikwe", type:"Villas", minAge:0, exclusive:true, price:"5★ / Ultra Lux", specials:"", website:"https://madikwehills.com/", image:"", highlights:"Exclusive-use villa attached to Madikwe Hills; Private game drive vehicle, chef, and butler.", maxPax:6, maxChildren:0, sto:"30%" },
     { name:"Rockfig Lodge Madikwe", reserve:"Madikwe", type:"Villas", minAge:0, exclusive:false, price:"5★ / Luxury", specials:"", website:"https://rockfigmadikwe.com/", image:"", highlights:"Modern, light-filled luxury villas; Inkwe Family House caters directly to families.", maxPax:14, maxChildren:0, sto:"20%" },
     // MALA MALA
     { name:"MalaMala Camp", reserve:"Mala Mala", type:"Suites, Villas", minAge:0, exclusive:false, price:"5★ / Luxury", specials:"Pay 3 Stay 4 Special", website:"https://www.malamala.com/", image:"", highlights:"Legendary game viewing; Unfenced Kruger boundary; Historic charm.", maxPax:30, maxChildren:0, sto:"10%" },
@@ -1353,15 +1145,6 @@ async function restoreFromSheet() {
             }
             if (row.include && row.include.toString().trim()) lodge.include = row.include.toString().trim();
             if (row.exclude && row.exclude.toString().trim()) lodge.exclude = row.exclude.toString().trim();
-            // Capacity fields from verifier tool
-            if (row.maxPax !== undefined && row.maxPax !== null && row.maxPax !== '') {
-                const mp = parseInt(row.maxPax);
-                if (!isNaN(mp) && mp > 0) { lodge.maxPax = mp; restoredFields++; }
-            }
-            if (row.minAge !== undefined && row.minAge !== null && row.minAge !== '') {
-                const ma = parseInt(row.minAge);
-                if (!isNaN(ma) && ma >= 0) { lodge.minAge = ma; }
-            }
         });
 
         // Restore favourites and notes into live state + localStorage
@@ -1388,7 +1171,12 @@ async function restoreFromSheet() {
 
 window.toggleFavorite = toggleFavorite;
 
-
+window.toggleUrlEdit = function(sid) {
+    const wrap = document.getElementById('urledit-' + sid);
+    if (!wrap) return;
+    wrap.style.display = wrap.style.display === 'block' ? 'none' : 'block';
+    if (wrap.style.display === 'block') document.getElementById('urlinput-' + sid).focus();
+};
 
 window.saveUrl = async function(sid, lodgeName) {
     const input = document.getElementById('urlinput-' + sid);
@@ -1419,7 +1207,20 @@ window.saveUrl = async function(sid, lodgeName) {
     }, 1200);
 };
 
-
+window.toggleNotes = function(safeName, lodgeName) {
+    const area = document.getElementById('notes-' + safeName);
+    const savedMsg = document.getElementById('noted-' + safeName);
+    if (!area) return;
+    area.style.display = area.style.display === 'block' ? 'none' : 'block';
+    if (area.style.display === 'block') area.focus();
+};
+window.onNoteInput = function(safeName, lodgeName) {
+    const area = document.getElementById('notes-' + safeName);
+    if (!area) return;
+    saveNote(lodgeName, area.value);
+    const msg = document.getElementById('noted-' + safeName);
+    if (msg) { msg.style.display = 'inline'; setTimeout(() => msg.style.display = 'none', 1500); }
+};
 
 // ═══════════════════════════════════════════════════
 // FACILITIES TOGGLE
@@ -1651,13 +1452,6 @@ function renderLodges() {
         return;
     }
 
-    // Render correct view
-    if (currentView === 'list') {
-        container.innerHTML = '';
-        renderListView(filtered);
-        return;
-    }
-
     container.innerHTML = filtered.map(lodge => {
         const isFav = favs.includes(lodge.name);
         const sid = safeid(lodge.name);
@@ -1670,7 +1464,18 @@ function renderLodges() {
 
         let linksBlock = '';
         if (lodge.website) linksBlock += `<a href="${lodge.website}" target="_blank" style="color: #2980b9;">🌐 Website</a>`;
-let partyBar = '';
+        linksBlock += `<button class="url-edit-btn" onclick="toggleUrlEdit('${sid}')" title="Edit website URL">✎ Edit URL</button>`;
+
+        const urlEditBlock = `<div class="url-edit-wrap" id="urledit-${sid}">
+            <input type="text" id="urlinput-${sid}" placeholder="https://..." value="${(lodge.website||'').replace(/"/g,'&quot;')}">
+            <div class="url-edit-actions">
+                <button class="btn-url-save" onclick="saveUrl('${sid}','${lodge.name.replace(/'/g,"\\'")}')">💾 Save to Sheet</button>
+                <button class="btn-url-cancel" onclick="toggleUrlEdit('${sid}')">Cancel</button>
+                <span class="url-save-msg" id="urlmsg-${sid}">✓ Saved!</span>
+            </div>
+        </div>`;
+
+        let partyBar = '';
         let multiRoomAlert = '';
         if (partyActive) {
             if (match === 'ok') partyBar = `<div class="party-match-bar ok">✓ Suits your party of ${partyAdults + partyChildren}</div>`;
@@ -1690,100 +1495,67 @@ let partyBar = '';
             }
         }
 
+        const noteVal = getNote(lodge.name).replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
         return `<div class="${cardClass}">
-            <div class="cr-reserve reserve-label">${lodge.reserve}</div>
-            <div class="cr-name card-header">
-                <div class="card-name-wrap"><h3 id="h3-${sid}">${lodge.name}</h3></div>
+            <div class="reserve-label">${lodge.reserve}</div>
+            <div class="card-header">
+                <h3>${lodge.name}</h3>
                 <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
-                    <span class="sto-badge">STO: ${(function(v){ if(typeof v==='number') return Math.round(v*100)+'%'; v=String(v); return (v.includes('%')||v.includes('BAR')||v.toUpperCase().includes('T.B.A')) ? v : v+'%'; })(lodge.sto)}</span>
+                    <span class="sto-badge">STO: ${(function(v){ if(typeof v==='number'){ return (v<=1?Math.round(v*100):Math.round(v))+'%'; } v=String(v).trim(); if(v.includes('%')||v.toUpperCase().includes('BAR')||v.toUpperCase().includes('T.B.A')) return v; if(!isNaN(v)&&parseFloat(v)<=1) return Math.round(parseFloat(v)*100)+'%'; return v+'%'; })(lodge.sto)}</span>
                     <button class="fav-btn" title="Toggle Favourite" onclick="toggleFavorite('${lodge.name.replace(/'/g,"\\'")}')">${isFav ? '❤️' : '🤍'}</button>
                 </div>
             </div>
-            <div class="cr-links">${linksBlock ? `<span class="card-links">${linksBlock}</span>` : '<span style="display:block;height:22px;"></span>'}${partyBar}</div>
-            <div class="cr-price price-tier">${lodge.price}</div>
-            <div class="cr-accom details"><strong>Accommodation:</strong> ${lodge.type}</div>
-            <div class="cr-cap details"><strong>Max Capacity:</strong> ${lodge.maxPax} guests</div>
-            <div class="cr-highlights highlights"><strong>Highlights:</strong> <span class="highlights-inner">${lodge.highlights}</span></div>
-            <div class="cr-badges badges">
+            ${linksBlock ? `<div class="card-links">${linksBlock}</div>` : ''}
+            ${urlEditBlock}
+            ${partyBar}
+            <div class="price-tier">${lodge.price}</div>
+            ${multiRoomAlert}
+            <div class="details"><strong>Accommodation:</strong> ${lodge.type}</div>
+            <div class="details"><strong>Max Capacity:</strong> ${lodge.maxPax} guests</div>
+            <div class="highlights"><strong>Highlights:</strong><br>${lodge.highlights}</div>
+            <div class="badges">
                 <span class="badge">${formatAgeString(lodge.minAge)}</span>
                 ${lodge.exclusive ? '<span class="badge exclusive">Exclusive Use</span>' : ''}
                 ${lodge.specials ? `<span class="badge special">${lodge.specials}</span>` : ''}
-                ${multiRoomAlert}
             </div>
-            <div class="cr-incl">
-                <button class="incl-btn" id="inclbtn-${sid}" onclick="toggleIncl2('${sid}')">📋 Inclusions &amp; Exclusions ▾</button>
-                <div id="inclpanel-${sid}" class="incl-panel" style="display:none;">
-                    ${(function(){
-                        const d = lodgeInclMap[lodge.name];
-                        if(!d) return '<em style="color:#aaa;font-size:0.8rem;">No inclusions data available</em>';
-                        const incl = (d.include||'').split('|').map(l=>l.trim()).filter(Boolean);
-                        const excl = (d.exclude||'').split('|').map(l=>l.trim()).filter(Boolean);
-                        return '<div class="incl-section-label inc">✓ Rates Include</div>'
-                            + '<ul>' + incl.map(l=>'<li>✓ ' + l + '</li>').join('') + '</ul>'
-                            + '<div class="incl-section-label exc">✗ Rates Exclude</div>'
-                            + '<ul>' + excl.map(l=>'<li>✗ ' + l + '</li>').join('') + '</ul>';
-                    })()}
-                </div>
+            <button class="incl-btn" id="inclbtn-${sid}" onclick="toggleIncl2('${sid}')">📋 Inclusions &amp; Exclusions ▾</button>
+            <div id="inclpanel-${sid}" class="incl-panel" style="display:none;">
+                ${(function(){
+                    const d = lodgeInclMap[lodge.name];
+                    if(!d) return '<em style="color:#aaa;font-size:0.8rem;">No inclusions data available</em>';
+                    const incl = (d.include||'').split('|').map(l=>l.trim()).filter(Boolean);
+                    const excl = (d.exclude||'').split('|').map(l=>l.trim()).filter(Boolean);
+                    return '<div class="incl-section-label inc">✓ Rates Include</div>'
+                        + '<ul>' + incl.map(l=>'<li>✓ ' + l + '</li>').join('') + '</ul>'
+                        + '<div class="incl-section-label exc">✗ Rates Exclude</div>'
+                        + '<ul>' + excl.map(l=>'<li>✗ ' + l + '</li>').join('') + '</ul>';
+                })()}
             </div>
-            <div class="cr-fac">
-                <button class="facilities-btn" id="facbtn-${sid}" onclick="toggleFacilities('${sid}')">🏕 Lodge Facilities &amp; Services ▾</button>
-                <div id="fac-${sid}" class="facilities-list" style="display:none;">
-                    <ul>${facHTML}</ul>
-                </div>
+            <button class="facilities-btn" id="facbtn-${sid}" onclick="toggleFacilities('${sid}')">🏕 Lodge Facilities &amp; Services ▾</button>
+            <div id="fac-${sid}" class="facilities-list" style="display:none;">
+                <ul>${facHTML}</ul>
+            </div>
+            <div class="notes-wrap">
+                <button class="notes-toggle" onclick="toggleNotes('${sid}','${lodge.name.replace(/'/g,"\\'")}')">📝 Personal Notes</button>
+                <textarea class="notes-area" id="notes-${sid}" placeholder="Your notes for this lodge..." oninput="onNoteInput('${sid}','${lodge.name.replace(/'/g,"\\'")}')"><br></textarea>
+                <span class="notes-saved" id="noted-${sid}">✓ Saved</span>
             </div>
         </div>`;
     }).join('');
 
-    // Equalise card rows after render
-    requestAnimationFrame(() => requestAnimationFrame(() => equaliseCardRows()));
-}
-
-
-
-
-// ═══════════════════════════════════════════════════
-// ADMIN PASSWORD LOCK
-// ═══════════════════════════════════════════════════
-let syncUnlocked = false;
-
-async function toggleSyncLock() {
-    if (syncUnlocked) {
-        syncUnlocked = false;
-        document.getElementById('syncControls').style.display = 'none';
-        document.getElementById('lockBtn').textContent = '🔒 Admin';
-        document.getElementById('lockBtn').classList.remove('unlocked');
-        document.getElementById('backupStatus').textContent = 'Admin login required to push/restore';
-        document.getElementById('backupStatus').className = 'backup-status idle';
-    } else {
-        const pwd = prompt('Enter admin password:');
-        const h = Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pwd)))).map(b=>b.toString(16).padStart(2,'0')).join(''); if (h === '52bb7cc738dbf5e5eee2c76754d87904e6750c63eda5e0a866197d2e16d9c142') {
-            syncUnlocked = true;
-            document.getElementById('syncControls').style.display = 'flex';
-            document.getElementById('lockBtn').textContent = '🔓 Admin';
-            document.getElementById('lockBtn').classList.add('unlocked');
-            document.getElementById('backupStatus').textContent = 'Admin unlocked — push and restore enabled';
-            document.getElementById('backupStatus').className = 'backup-status success';
-        } else if (pwd !== null) {
-            alert('Incorrect password.');
+    // Restore note content
+    filtered.forEach(lodge => {
+        const sid = safeid(lodge.name);
+        const area = document.getElementById('notes-' + sid);
+        if (area) {
+            const saved = getNote(lodge.name);
+            area.value = saved;
+            if (saved) area.style.display = 'block';
         }
-    }
+    });
 }
 
-// ═══════════════════════════════════════════════════
-// PRINT / PDF
-// ═══════════════════════════════════════════════════
-function printMode(mode) {
-    // Update print header meta
-    const statsText = document.getElementById('statsBar') ? document.getElementById('statsBar').innerText : '';
-    const meta = document.getElementById('printMeta');
-    if (meta) meta.textContent = statsText + ' — ' + new Date().toLocaleDateString('en-ZA');
-    // Set body class for CSS targeting
-    document.body.classList.remove('print-tile', 'print-list');
-    document.body.classList.add('print-' + mode);
-    window.print();
-    // Clean up after print dialog closes
-    setTimeout(() => document.body.classList.remove('print-tile', 'print-list'), 1000);
-}
 // ═══════════════════════════════════════════════════
 // NAME SEARCH
 // ═══════════════════════════════════════════════════
@@ -1818,7 +1590,6 @@ favoritesFilter.addEventListener('change', renderLodges);
 sortFilter.addEventListener('change', renderLodges);
 
 populateDropdowns();
-window.addEventListener('resize', () => { clearTimeout(window._eqTimer); window._eqTimer = setTimeout(equaliseCardRows, 180); });
 
 // ═══════════════════════════════════════════════════
 // AUTO-LOAD FROM SHEET ON STARTUP
@@ -1840,7 +1611,7 @@ window.addEventListener('resize', () => { clearTimeout(window._eqTimer); window.
                 const row = sheetMap[lodge.name];
                 if (!row) return;
                 if (row.website  && row.website.trim())   lodge.website   = row.website.trim();
-                if (row.sto      && row.sto.toString().trim()) lodge.sto  = row.sto.toString().trim();
+                if (row.sto      && row.sto.toString().trim()) { let _sv=row.sto.toString().trim(); if(!isNaN(_sv)&&!_sv.includes('%')&&parseFloat(_sv)<=1) _sv=Math.round(parseFloat(_sv)*100)+'%'; lodge.sto=_sv; }
                 if (row.specials !== undefined && row.specials !== null) lodge.specials = row.specials.toString().trim();
                 if (row.price    && row.price.trim())     lodge.price     = row.price.trim();
                 if (row.highlights && row.highlights.trim()) lodge.highlights = row.highlights.trim();
@@ -2000,173 +1771,14 @@ function renderCompareTable() {
         if (compareMode === 'diff' && allSame) return;
         const isDiff = !allSame;
         tbody += `<tr class="${isDiff ? 'diff-row' : ''}">`;
-        tbody += `<td>${row.label}</td>`;
+        tbody += `<td>${row.label}${isDiff ? ' <span style="color:#d35400;font-size:0.7rem;">▲ differs</span>' : ''}</td>`;
         vals.forEach(v => {
             tbody += row.html ? `<td>${v}</td>` : `<td>${v}</td>`;
         });
         tbody += '</tr>';
     });
 
-    // Equal width for all lodge columns — 130px for field col, rest split equally
-    const fieldColWidth = 130;
-    const lodgeColWidth = Math.floor((100 - (fieldColWidth / 10)) / selected.length);
-    const colgroup = '<colgroup><col style="width:' + fieldColWidth + 'px">' + 
-        selected.map(() => '<col style="width:' + lodgeColWidth + '%)">').join('') + '</colgroup>';
-    wrap.innerHTML = `<table class="compare-table">${colgroup}<thead>${thead}</thead><tbody>${tbody}</tbody></table>`;
-}
-
-
-
-// ═══════════════════════════════════════════════════
-// ROW EQUALISER — FINAL VERSION
-// ═══════════════════════════════════════════════════
-function equaliseCardRows() {
-    const grid = document.getElementById('lodgeGrid');
-    if (!grid) return;
-    const cards = Array.from(grid.querySelectorAll('.card'));
-    if (cards.length < 2) return;
-
-    const rowClasses = [
-      'cr-reserve','cr-name','cr-links','cr-price',
-      'cr-accom','cr-cap','cr-highlights','cr-badges',
-      'cr-incl','cr-fac'
-    ];
-
-    // 2. Reset all heights
-    rowClasses.forEach(cls => {
-      cards.forEach(card => {
-        const el = card.querySelector('.' + cls);
-        if (el) { el.style.minHeight = ''; el.style.height = ''; }
-      });
-    });
-
-    // 3. Force layout + small delay for font rendering
-    void grid.offsetHeight;
-    setTimeout(() => {
-      const tops = cards.map(c => Math.round(c.getBoundingClientRect().top));
-      const uniqueTops = [...new Set(tops)];
-      const rows = uniqueTops.map(t => cards.filter((c, i) => tops[i] === t));
-
-      rows.forEach(rowCards => {
-        rowClasses.forEach(cls => {
-          let maxH = 0;
-          rowCards.forEach(card => {
-            const el = card.querySelector('.' + cls);
-            if (el) { const h = el.getBoundingClientRect().height; if (h > maxH) maxH = h; }
-          });
-          if (maxH > 0) {
-            rowCards.forEach(card => {
-              const el = card.querySelector('.' + cls);
-              if (el) el.style.minHeight = `${maxH}px`;
-            });
-          }
-        });
-      });
-    }, 30);
-}
-
-
-// ═══════════════════════════════════════════════════
-// BUG REPORT
-// ═══════════════════════════════════════════════════
-function openBugReport() {
-    document.getElementById('bugModal').classList.remove('hidden');
-    // Clear previous
-    ['bug-name','bug-area','bug-expected','bug-actual','bug-steps','bug-lodge','bug-browser'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.value = '';
-    });
-    document.getElementById('bug-sev').value = '';
-    document.querySelectorAll('.bug-sev-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('bugOutput').style.display = 'none';
-}
-
-function closeBugReport() {
-    document.getElementById('bugModal').classList.add('hidden');
-}
-
-function setBugSev(val, el) {
-    document.getElementById('bug-sev').value = val;
-    document.querySelectorAll('.bug-sev-btn').forEach(b => b.classList.remove('active'));
-    el.classList.add('active');
-}
-
-function copyBugReport() {
-    const g = id => { const e = document.getElementById(id); return e ? e.value.trim() : ''; };
-    const actual = g('bug-actual');
-    if (!actual) { alert('Please describe what actually happened.'); return; }
-
-    let out = '=== BUG REPORT ===\n';
-    out += 'Date: ' + new Date().toLocaleDateString('en-ZA') + '\n';
-    if (g('bug-name'))    out += 'Reporter: '  + g('bug-name')    + '\n';
-    if (g('bug-area'))    out += 'Area: '      + g('bug-area')    + '\n';
-    if (g('bug-sev'))     out += 'Severity: '  + g('bug-sev')     + '\n';
-    if (g('bug-lodge'))   out += 'Lodge: '     + g('bug-lodge')   + '\n';
-    if (g('bug-browser')) out += 'Browser: '   + g('bug-browser') + '\n';
-    if (g('bug-expected'))out += 'Expected: '  + g('bug-expected')+ '\n';
-    out += 'Actual: ' + actual + '\n';
-    if (g('bug-steps'))   out += 'Steps: '     + g('bug-steps')   + '\n';
-    out += '=== END ===';
-
-    const box = document.getElementById('bugOutput');
-    box.style.display = 'block';
-    box.textContent = out;
-
-    navigator.clipboard.writeText(out).then(() => {
-        alert('Bug report copied to clipboard! Send it to Hein.');
-        closeBugReport();
-    }).catch(() => {
-        alert('Copy the text above and send it to Hein.');
-    });
-}
-
-// Close bug modal on overlay click
-document.getElementById('bugModal').addEventListener('click', function(e) {
-    if (e.target === this) closeBugReport();
-});
-
-
-window.addEventListener('load', equaliseCardRows);
-
-// ═══════════════════════════════════════════════════
-// LIST / TILE VIEW TOGGLE
-// ═══════════════════════════════════════════════════
-
-function setView(view) {
-    currentView = view;
-    document.getElementById('lodgeGrid').style.display = view === 'tile' ? '' : 'none';
-    document.getElementById('lodgeListWrap').style.display = view === 'list' ? '' : 'none';
-    document.getElementById('btnTileView').classList.toggle('active', view === 'tile');
-    document.getElementById('btnListView').classList.toggle('active', view === 'list');
-    renderLodges();
-}
-
-function renderListView(filtered) {
-    const favs = getFavorites();
-    const rows = filtered.map(lodge => {
-        const isFav = favs.includes(lodge.name);
-        const sto = (function(v) {
-            if (typeof v === 'number') return Math.round(v * 100) + '%';
-            v = String(v);
-            return (v.includes('%') || v.includes('BAR') || v.toUpperCase().includes('T.B.A')) ? v : v + '%';
-        })(lodge.sto);
-        const age = lodge.minAge === 0 ? 'All Ages' : lodge.minAge + '+';
-        const websiteLink = lodge.website
-            ? `<a href="${lodge.website}" target="_blank">${lodge.name}</a>`
-            : lodge.name;
-        return `<tr>
-            <td><button class="ll-fav" onclick="toggleFavorite('${lodge.name.replace(/'/g,"\'")}')">
-                ${isFav ? '❤️' : '🤍'}</button></td>
-            <td class="ll-reserve">${lodge.reserve}</td>
-            <td class="ll-name">${websiteLink}${lodge.exclusive ? '<span class="ll-exc">Excl.</span>' : ''}</td>
-            <td><span class="ll-sto">${sto}</span></td>
-            <td><span class="ll-age">${age}</span></td>
-            <td>${lodge.type}</td>
-            <td>${lodge.maxPax ? lodge.maxPax + ' pax' : '—'}</td>
-            <td class="ll-star">${lodge.price}</td>
-        </tr>`;
-    }).join('');
-    document.getElementById('lodgeListBody').innerHTML = rows;
+    wrap.innerHTML = `<table class="compare-table"><thead>${thead}</thead><tbody>${tbody}</tbody></table>`;
 }
 
 </script>
@@ -2190,72 +1802,6 @@ function renderListView(filtered) {
       </div>
     </div>
     <div class="compare-table-wrap" id="compareTableWrap"></div>
-  </div>
-</div>
-
-
-<!-- ══════════ BUG REPORT MODAL ══════════ -->
-<div class="bug-modal-overlay hidden" id="bugModal">
-  <div class="bug-modal">
-    <h2>🐛 Report a Bug</h2>
-    <p>Fill in what you can — the more detail the better. Hit Copy &amp; Close when done.</p>
-    <div class="bug-row">
-      <div class="bug-field">
-        <label>Your name</label>
-        <input type="text" id="bug-name" placeholder="e.g. Janine">
-      </div>
-      <div class="bug-field">
-        <label>Area of the app</label>
-        <select id="bug-area">
-          <option value="">— select —</option>
-          <option>Filters / Search</option>
-          <option>Party Builder</option>
-          <option>Lodge Cards</option>
-          <option>Inclusions &amp; Exclusions</option>
-          <option>Lodge Facilities</option>
-          <option>Compare Tool</option>
-          <option>Print Tiles</option>
-          <option>Print List</option>
-          <option>Google Sheets Sync</option>
-          <option>Favourites</option>
-          <option>Other</option>
-        </select>
-      </div>
-    </div>
-    <div class="bug-field">
-      <label>Severity</label>
-      <div class="bug-sev">
-        <div class="bug-sev-btn low" onclick="setBugSev('Low',this)">Low</div>
-        <div class="bug-sev-btn med" onclick="setBugSev('Medium',this)">Medium</div>
-        <div class="bug-sev-btn high" onclick="setBugSev('High',this)">High</div>
-      </div>
-      <input type="hidden" id="bug-sev" value="">
-    </div>
-    <div class="bug-field">
-      <label>What did you expect?</label>
-      <textarea id="bug-expected" placeholder="e.g. Clicking Compare should open the comparison table"></textarea>
-    </div>
-    <div class="bug-field">
-      <label>What actually happened?</label>
-      <textarea id="bug-actual" placeholder="e.g. Nothing happened / page went blank / wrong data shown"></textarea>
-    </div>
-    <div class="bug-row">
-      <div class="bug-field">
-        <label>Steps to reproduce</label>
-        <textarea id="bug-steps" placeholder="1. Filter by Timbavati&#10;2. Click Compare&#10;3. ..."></textarea>
-      </div>
-      <div class="bug-field">
-        <label>Lodge name (if relevant)</label>
-        <input type="text" id="bug-lodge" placeholder="e.g. Chitwa Chitwa">
-        <label style="margin-top:8px;">Browser / device</label>
-        <input type="text" id="bug-browser" placeholder="e.g. Chrome on Windows">
-      </div>
-    </div>
-    <div class="bug-output" id="bugOutput"></div>
-    <div class="bug-actions">
-      <button class="bug-cancel" onclick="closeBugReport()">Close</button>
-      <button class="bug-submit" onclick="copyBugReport()">📋 Copy &amp; Close</button>
-    </div>
   </div>
 </div>
 
